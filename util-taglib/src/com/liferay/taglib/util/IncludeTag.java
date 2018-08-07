@@ -43,6 +43,7 @@ import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.io.IOException;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -157,12 +158,7 @@ public class IncludeTag extends AttributesTagSupport {
 		HttpServletRequest request = getOriginalServletRequest();
 
 		if (isCleanUpSetAttributes()) {
-			if (_setAttributes == null) {
-				_setAttributes = new HashSet<>();
-			}
-
-			_trackedRequest = new TrackedServletRequest(
-				request, _setAttributes);
+			_trackedRequest = new TrackedServletRequest(request);
 
 			request = _trackedRequest;
 		}
@@ -179,11 +175,9 @@ public class IncludeTag extends AttributesTagSupport {
 
 	protected void cleanUpSetAttributes() {
 		if (isCleanUpSetAttributes() && (_trackedRequest != null)) {
-			for (String name : _setAttributes) {
+			for (String name : _trackedRequest.getSetAttributes()) {
 				_trackedRequest.removeAttribute(name);
 			}
-
-			_setAttributes.clear();
 
 			_trackedRequest = null;
 		}
@@ -517,7 +511,6 @@ public class IncludeTag extends AttributesTagSupport {
 	private static final Log _log = LogFactoryUtil.getLog(IncludeTag.class);
 
 	private String _page;
-	private Set<String> _setAttributes;
 	private boolean _strict;
 	private TrackedServletRequest _trackedRequest;
 	private boolean _useCustomPage = true;
@@ -525,22 +518,31 @@ public class IncludeTag extends AttributesTagSupport {
 	private static class TrackedServletRequest
 		extends HttpServletRequestWrapper {
 
+		public TrackedServletRequest(HttpServletRequest request) {
+			super(request);
+		}
+
+		public Set<String> getSetAttributes() {
+			if (_setAttributes == null) {
+				return Collections.emptySet();
+			}
+			else {
+				return _setAttributes;
+			}
+		}
+
 		@Override
 		public void setAttribute(String name, Object obj) {
+			if (_setAttributes == null) {
+				_setAttributes = new HashSet<>();
+			}
+
 			_setAttributes.add(name);
 
 			super.setAttribute(name, obj);
 		}
 
-		private TrackedServletRequest(
-			HttpServletRequest request, Set<String> setAttributes) {
-
-			super(request);
-
-			_setAttributes = setAttributes;
-		}
-
-		private final Set<String> _setAttributes;
+		private Set<String> _setAttributes;
 
 	}
 
