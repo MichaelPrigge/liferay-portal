@@ -33,4 +33,6 @@ public class AccountWebKeys {
 
 	public static final String SHOW_TITLE = "SHOW_TITLE";
 
+	public static final String HELLO_WORLD = "HELLO_WORLD";
+
 }
