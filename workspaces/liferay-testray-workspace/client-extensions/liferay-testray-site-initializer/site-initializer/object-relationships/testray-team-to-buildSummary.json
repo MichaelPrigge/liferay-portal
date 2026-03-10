@@ -1,0 +1,11 @@
+{
+	"deletionType": "disassociate",
+	"label": {
+		"en-US": "Testray Build Summary"
+	},
+	"name": "teamToBuildSummary",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Team$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:BuildSummary$]",
+	"objectDefinitionName2": "BuildSummary",
+	"type": "oneToMany"
+}
