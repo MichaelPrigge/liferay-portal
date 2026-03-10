@@ -530,64 +530,20 @@ public class TestrayManagerImpl implements TestrayManager {
 			long companyId, long testrayBuildId, long userId)
 		throws Exception {
 
-		Page<com.liferay.object.rest.dto.v1_0.ObjectEntry> objectEntriesPage =
-			_objectEntryManager.getObjectEntries(
-				companyId,
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					companyId, "C_CaseResult"),
-				null,
-				new Aggregation() {
-					{
-						setAggregationTerms(
-							HashMapBuilder.put(
-								"dueStatus", "dueStatus"
-							).build());
-					}
-				},
-				new DefaultDTOConverterContext(
-					false, null, null, null, null, LocaleUtil.getSiteDefault(),
-					null, _userLocalService.fetchUser(userId)),
-				"buildId eq '" + testrayBuildId + "'", Pagination.of(1, 8),
-				null, null);
+		Map<String, Serializable> map = _getTestrayBuildSummary(
+			companyId, testrayBuildId, 0, userId);
 
-		List<Facet> facets = objectEntriesPage.getFacets();
+		List<Long> testrayTeamIds = _getTestrayTeamIds(
+			companyId, testrayBuildId);
 
-		Facet facet = facets.get(0);
+		if (ListUtil.isNotEmpty(testrayTeamIds)) {
+			for (Long testrayTeamId : testrayTeamIds) {
+				Map<String, Serializable> map2 = _getTestrayBuildSummary(
+					companyId, testrayBuildId, testrayTeamId, userId);
 
-		List<Facet.FacetValue> facetValues = facet.getFacetValues();
+				// Insert into TestrayBuilfSummaryTeam
 
-		Map<String, Serializable> map =
-			HashMapBuilder.<String, Serializable>put(
-				"caseResultBlocked", 0
-			).put(
-				"caseResultFailed", 0
-			).put(
-				"caseResultIncomplete", 0
-			).put(
-				"caseResultPassed", 0
-			).put(
-				"caseResultTestFix", 0
-			).put(
-				"caseResultUntested", 0
-			).put(
-				"importStatus", "DONE"
-			).build();
-
-		for (Facet.FacetValue facetValue : facetValues) {
-			String key = facetValue.getTerm();
-
-			if (key.equals("INPROGRESS")) {
-				key = "InProgress";
 			}
-			else if (key.equals("TESTFIX")) {
-				key = "TestFix";
-			}
-			else {
-				key = StringUtil.upperCaseFirstLetter(
-					StringUtil.lowerCase(key));
-			}
-
-			map.put("caseResult" + key, facetValue.getNumberOfOccurrences());
 		}
 
 		return _patchObjectEntry(map, testrayBuildId, userId);
@@ -1317,6 +1273,77 @@ public class TestrayManagerImpl implements TestrayManager {
 		return testrayBuildId;
 	}
 
+	private Map<String, Serializable> _getTestrayBuildSummary(
+			long companyId, long testrayBuildId, long testrayTeamId,
+			long userId)
+		throws Exception {
+
+		Page<com.liferay.object.rest.dto.v1_0.ObjectEntry> objectEntriesPage =
+			_objectEntryManager.getObjectEntries(
+				companyId,
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					companyId, "C_CaseResult"),
+				null,
+				new Aggregation() {
+					{
+						setAggregationTerms(
+							HashMapBuilder.put(
+								"dueStatus", "dueStatus"
+							).build());
+					}
+				},
+				new DefaultDTOConverterContext(
+					false, null, null, null, null, LocaleUtil.getSiteDefault(),
+					null, _userLocalService.fetchUser(userId)),
+				StringBundler.concat(
+					"buildId eq '", testrayBuildId, "'",
+					(testrayTeamId > 0) ?
+						"AND teamId eq '" + testrayTeamId + "'" : ""),
+				Pagination.of(1, 8), null, null);
+
+		List<Facet> facets = objectEntriesPage.getFacets();
+
+		Facet facet = facets.get(0);
+
+		List<Facet.FacetValue> facetValues = facet.getFacetValues();
+
+		Map<String, Serializable> map =
+			HashMapBuilder.<String, Serializable>put(
+				"caseResultBlocked", 0
+			).put(
+				"caseResultFailed", 0
+			).put(
+				"caseResultIncomplete", 0
+			).put(
+				"caseResultPassed", 0
+			).put(
+				"caseResultTestFix", 0
+			).put(
+				"caseResultUntested", 0
+			).put(
+				"importStatus", "DONE"
+			).build();
+
+		for (Facet.FacetValue facetValue : facetValues) {
+			String key = facetValue.getTerm();
+
+			if (key.equals("INPROGRESS")) {
+				key = "InProgress";
+			}
+			else if (key.equals("TESTFIX")) {
+				key = "TestFix";
+			}
+			else {
+				key = StringUtil.upperCaseFirstLetter(
+					StringUtil.lowerCase(key));
+			}
+
+			map.put("caseResult" + key, facetValue.getNumberOfOccurrences());
+		}
+
+		return map;
+	}
+
 	private Map<Long, List<Map<String, Serializable>>>
 			_getTestrayCaseResultsByTestrayBuildGroupedByTestrayCase(
 				long companyId, ObjectDefinition objectDefinition,
@@ -1759,6 +1786,26 @@ public class TestrayManagerImpl implements TestrayManager {
 			objectEntryIdsKey, objectEntry.getObjectEntryId());
 
 		return objectEntry.getObjectEntryId();
+	}
+
+	private List<Long> _getTestrayTeamIds(long companyId, long testrayBuildId)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("select distinct cr.r_teamToCaseResult_c_teamId from ");
+		sb.append("O_[%COMPANY_ID%]_CaseResult cr where ");
+		sb.append("cr.r_buildToCaseResult_c_buildId = ? ");
+
+		List<Map<String, Object>> values = TestrayUtil.executeQuery(
+			StringUtil.replace(
+				sb.toString(), "[%COMPANY_ID%]", String.valueOf(companyId)),
+			ListUtil.fromArray(GetterUtil.getLong(testrayBuildId)));
+
+		return TransformUtil.transform(
+			values,
+			value -> GetterUtil.getLong(
+				value.get("r_teamToCaseResult_c_teamId")));
 	}
 
 	private List<Map<String, Serializable>> _getValuesList(
