@@ -541,13 +541,31 @@ public class TestrayManagerImpl implements TestrayManager {
 				Map<String, Serializable> map2 = _getTestrayBuildSummary(
 					companyId, testrayBuildId, testrayTeamId, userId);
 
-				// Insert into TestrayBuilfSummaryTeam
+//				_addObjectEntry("", new ServiceContext(), tes);
 
 			}
 		}
 
 		return _patchObjectEntry(map, testrayBuildId, userId);
 	}
+
+    private void _addOrUpdateTestrayBuildSummary(
+            ServiceContext serviceContext,
+            long testrayBuildId, TestrayCache testrayCache,  long testrayTeamId,
+            long userId)
+            throws Exception {
+
+        String objectEntryIdsKey = StringBundler.concat(
+                "BuildId#", testrayBuildId, "#TeamId#", testrayTeamId);
+
+        long testrayCaseResultId = _getObjectEntryId(
+                serviceContext.getCompanyId(),
+                StringBundler.concat(
+                        "r_buildToBuildSummary_c_buildId eq '", testrayBuildId,
+                        "' and r_teamToBuildSummary_c_teamId eq '", testrayTeamId, "'"),
+                objectEntryIdsKey, new String[] {"106430600"}, "BuildSummary",
+                testrayCache, userId);
+    }
 
 	private void _addDefaultFactors(
 			long companyId, ServiceContext serviceContext,
