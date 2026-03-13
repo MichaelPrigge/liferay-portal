@@ -1,4 +1,5 @@
 dependencies {
+<<<<<<< HEAD
 	compileInclude group: "com.azure", name: "azure-core", version: "1.50.0"
 	compileInclude group: "com.azure", name: "azure-core-http-netty", version: "1.15.2"
 	compileInclude group: "com.azure", name: "azure-identity", version: "1.13.1"
@@ -18,6 +19,13 @@ dependencies {
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.18.2"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.18.2"
 	compileOnly group: "com.fasterxml.woodstox", name: "woodstox-core", version: "6.4.0"
+=======
+	compileIncludePlatform group: "com.azure", name: "azure-identity"
+	compileIncludePlatform group: "com.azure", name: "azure-storage-blob"
+	compileIncludePlatform group: "com.azure", name: "azure-storage-blob-batch"
+	compileIncludePlatform platform("com.azure:azure-sdk-bom:1.2.26")
+
+>>>>>>> parent of 83e8e3dd29790 (LPD-46473 Auto SF)
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.nimbusds", name: "content-type", version: "2.3"

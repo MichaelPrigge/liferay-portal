@@ -6,7 +6,13 @@ buildService {
 dependencies {
 	compileInclude group: "com.damnhandy", name: "handy-uri-templates", version: "2.1.8"
 	compileInclude group: "com.github.everit-org.json-schema", name: "org.everit.json.schema", version: "1.11.1"
+<<<<<<< HEAD
 	compileInclude group: "com.google.re2j", name: "re2j", version: "1.8"
+=======
+	compileInclude group: "com.google.re2j", name: "re2j", version: "1.2"
+	compileInclude group: "org.json", name: "json", version: "20231013"
+
+>>>>>>> parent of 83e8e3dd29790 (LPD-46473 Auto SF)
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.jakarta.portlet", name: "com.liferay.jakarta.portlet-api", version: "4.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
@@ -52,10 +58,22 @@ dependencies {
 	compileOnly project(":dxp:apps:portal-search-tuning:portal-search-tuning-rankings-api")
 	compileOnly project(":dxp:apps:search-experiences:search-experiences-api")
 	compileOnly project(":dxp:apps:search-experiences:search-experiences-rest-api")
+<<<<<<< HEAD
 	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.18.2"
 	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.18.2"
 	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.18.2"
+<<<<<<< HEAD
 	testImplementation group: "com.liferay", name: "jakarta.ws.rs", version: "3.1.0.LIFERAY-PATCHED-1"
+=======
+
+	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.16.1"
+	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.16.1"
+	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.16.1"
+	testImplementation group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
+>>>>>>> parent of 83e8e3dd29790 (LPD-46473 Auto SF)
+=======
+	testImplementation group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
+>>>>>>> parent of 909360bc1cc8f (LPD-53448 Auto SF)
 	testImplementation project(":apps:portal-search:portal-search")
 	testImplementation project(":apps:portal-search:portal-search-test-util")
 	testImplementation project(":apps:users-admin:users-admin-test-util")

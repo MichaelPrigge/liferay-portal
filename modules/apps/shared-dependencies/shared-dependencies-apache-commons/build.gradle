@@ -12,5 +12,10 @@ dependencies {
 	compileInclude group: "org.apache.commons", name: "commons-lang3", version: "3.18.0"
 	compileInclude group: "org.apache.commons", name: "commons-math3", version: "3.6.1"
 	compileInclude group: "org.tukaani", name: "xz", version: "1.9"
+<<<<<<< HEAD
 	compileOnly group: "jakarta.annotation", name: "jakarta.annotation-api", version: "2.1.1"
+=======
+
+	compileOnly group: "javax.annotation", name: "javax.annotation-api", version: "1.3.2"
+>>>>>>> parent of 83e8e3dd29790 (LPD-46473 Auto SF)
 }

@@ -2,4 +2,10 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
+<<<<<<< HEAD
+=======
+
+	testImplementation project(":core:petra:petra-concurrent")
+	testImplementation project(":core:petra:petra-memory")
+>>>>>>> parent of 83e8e3dd29790 (LPD-46473 Auto SF)
 }

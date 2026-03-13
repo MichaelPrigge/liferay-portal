@@ -1,5 +1,10 @@
 dependencies {
+<<<<<<< HEAD
 	compileInclude group: "com.liferay.osb.koroneiki", name: "com.liferay.osb.koroneiki.rest.client", version: "latest.release"
+=======
+	compileInclude group: "com.liferay.osb.koroneiki", name: "com.liferay.osb.koroneiki.client", version: "1.0.0"
+
+>>>>>>> parent of 83e8e3dd29790 (LPD-46473 Auto SF)
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "jakarta.servlet", name: "jakarta.servlet-api", version: "6.0.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"

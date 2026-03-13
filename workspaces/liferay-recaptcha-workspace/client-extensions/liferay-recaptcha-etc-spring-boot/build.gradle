@@ -24,7 +24,12 @@ dependencies {
 	implementation group: "org.json", name: "json", version: "20231013"
 	implementation group: "org.springframework.boot", name: "spring-boot-starter-oauth2-resource-server", version: "2.7.18"
 	implementation group: "org.springframework.boot", name: "spring-boot-starter-web", version: "2.7.18"
+<<<<<<< HEAD:workspaces/liferay-recaptcha-workspace/client-extensions/liferay-recaptcha-etc-spring-boot/build.gradle
 	implementation group: "org.springframework.boot", name: "spring-boot-starter-webflux", version: "2.7.18"
+=======
+
+	runtimeOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "latest.release"
+>>>>>>> parent of 83e8e3dd29790 (LPD-46473 Auto SF):workspaces/liferay-customer-workspace/client-extensions/liferay-customer-etc-cron/build.gradle
 }
 
 repositories {

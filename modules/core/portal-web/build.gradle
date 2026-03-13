@@ -6,5 +6,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:shielded-container-api")
+
 	testImplementation project(":core:petra:petra-process")
 }

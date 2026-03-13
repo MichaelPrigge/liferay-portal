@@ -1,5 +1,10 @@
 dependencies {
+<<<<<<< HEAD
 	compileOnly group: "com.liferay.jakarta.portlet", name: "com.liferay.jakarta.portlet-api", version: "4.0.0"
+=======
+	alloyTaglib project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+
+>>>>>>> parent of 83e8e3dd29790 (LPD-46473 Auto SF)
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"

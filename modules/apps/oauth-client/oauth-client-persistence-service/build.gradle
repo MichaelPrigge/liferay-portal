@@ -4,8 +4,19 @@ buildService {
 }
 
 dependencies {
+<<<<<<< HEAD
 	compileInclude group: "jakarta.mail", name: "jakarta.mail-api", version: "2.1.3"
 	compileOnly group: "com.liferay.jakarta.portlet", name: "com.liferay.jakarta.portlet-api", version: "4.0.0"
+=======
+	compileInclude group: "com.github.stephenc.jcip", name: "jcip-annotations", version: "1.0-1"
+	compileInclude group: "com.nimbusds", name: "content-type", version: "2.3"
+	compileInclude group: "com.nimbusds", name: "lang-tag", version: "1.7"
+	compileInclude group: "com.nimbusds", name: "nimbus-jose-jwt", version: "9.40"
+	compileInclude group: "com.nimbusds", name: "oauth2-oidc-sdk", version: "11.13"
+	compileInclude group: "com.sun.mail", name: "jakarta.mail", version: "1.6.6"
+	compileInclude group: "org.apache.commons", name: "commons-lang3", version: "3.4"
+
+>>>>>>> parent of 83e8e3dd29790 (LPD-46473 Auto SF)
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.nimbusds", name: "content-type", version: "2.3"

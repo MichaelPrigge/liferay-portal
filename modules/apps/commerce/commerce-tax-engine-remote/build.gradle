@@ -17,5 +17,10 @@ dependencies {
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
+<<<<<<< HEAD
 	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.18.2"
+=======
+
+	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.16.1"
+>>>>>>> parent of 83e8e3dd29790 (LPD-46473 Auto SF)
 }

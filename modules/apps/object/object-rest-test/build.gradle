@@ -1,11 +1,24 @@
 dependencies {
 	testCompileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testCompileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+<<<<<<< HEAD
 	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.18.2"
 	testIntegrationImplementation group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.18.2"
+<<<<<<< HEAD
 	testIntegrationImplementation group: "com.liferay", name: "jakarta.ws.rs", version: "3.1.0.LIFERAY-PATCHED-1"
 	testIntegrationImplementation group: "com.liferay", name: "org.apache.cxf.core", version: "3.6.9.JAKARTA-LIFERAY-PATCHED-1"
 	testIntegrationImplementation group: "io.swagger.core.v3", name: "swagger-models-jakarta", version: "2.2.28"
+=======
+
+	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.16.1"
+	testIntegrationImplementation group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.14.2"
+	testIntegrationImplementation group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
+	testIntegrationImplementation group: "org.apache.cxf", name: "cxf-core", version: "3.5.9"
+>>>>>>> parent of 83e8e3dd29790 (LPD-46473 Auto SF)
+=======
+	testIntegrationImplementation group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
+	testIntegrationImplementation group: "org.apache.cxf", name: "cxf-core", version: "3.5.11"
+>>>>>>> parent of 909360bc1cc8f (LPD-53448 Auto SF)
 	testIntegrationImplementation group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 	testIntegrationImplementation group: "org.yaml", name: "snakeyaml", version: "2.3"
 	testIntegrationImplementation project(":apps:account:account-api")

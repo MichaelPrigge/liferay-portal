@@ -31,7 +31,12 @@ apply plugin: "java-library"
 task runGradleTest
 
 dependencies {
+<<<<<<< HEAD
 	serviceBuilder group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "1.0.515"
+=======
+	serviceBuilder group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "1.0.495"
+
+>>>>>>> parent of 83e8e3dd29790 (LPD-46473 Auto SF)
 	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom", version: "7.2.1"
 }
 

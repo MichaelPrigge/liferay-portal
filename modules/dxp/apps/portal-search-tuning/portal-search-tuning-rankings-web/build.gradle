@@ -34,8 +34,14 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":dxp:apps:portal-search-tuning:portal-search-tuning-rankings-api")
 	compileOnly project(":dxp:apps:portal-search-tuning:portal-search-tuning-web-api")
+<<<<<<< HEAD
 	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.18.2"
 	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.18.2"
+=======
+
+	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.16.1"
+	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.16.1"
+>>>>>>> parent of 83e8e3dd29790 (LPD-46473 Auto SF)
 	testImplementation project(":apps:portal-search:portal-search")
 	testImplementation project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 	testImplementation project(":apps:static:portal-file-install:portal-file-install-api")

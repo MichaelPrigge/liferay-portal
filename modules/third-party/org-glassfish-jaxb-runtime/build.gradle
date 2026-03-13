@@ -7,6 +7,7 @@ task patch(type: PatchTask)
 
 dependencies {
 	compileInclude group: "org.glassfish.jaxb", name: "txw2", version: "2.3.1"
+
 	compileOnly group: "org.glassfish.jaxb", name: "jaxb-runtime", transitive: false, version: "2.3.1"
 }
 

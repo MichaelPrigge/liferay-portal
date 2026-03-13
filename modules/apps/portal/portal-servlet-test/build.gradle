@@ -4,5 +4,6 @@ dependencies {
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testImplementation group: "jakarta.servlet", name: "jakarta.servlet-api", version: "6.0.0"
 	testImplementation group: "org.osgi", name: "osgi.core", version: "6.0.0"
+
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

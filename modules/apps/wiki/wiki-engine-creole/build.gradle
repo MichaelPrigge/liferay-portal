@@ -57,9 +57,17 @@ configure([compileJava, jarSources]) {
 }
 
 dependencies {
+<<<<<<< HEAD
 	compileInclude group: "org.antlr", name: "antlr-runtime", version: "3.5.3"
 	compileInclude group: "org.antlr", name: "stringtemplate", version: "3.2.1"
 	compileOnly group: "com.liferay.jakarta.portlet", name: "com.liferay.jakarta.portlet-api", version: "4.0.0"
+=======
+	antlr group: "org.antlr", name: "antlr", version: "3.0.1"
+
+	compileInclude group: "antlr", name: "antlr", version: "2.7.7"
+	compileInclude group: "org.antlr", name: "stringtemplate", version: "3.0"
+
+>>>>>>> parent of 83e8e3dd29790 (LPD-46473 Auto SF)
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
@@ -71,6 +79,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
+
 	testImplementation project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 	testImplementation project(":apps:static:portal-file-install:portal-file-install-api")
 }

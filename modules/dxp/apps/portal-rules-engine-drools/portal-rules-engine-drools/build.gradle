@@ -6,7 +6,16 @@ dependencies {
 	compileInclude group: "org.antlr", name: "antlr-runtime", version: "3.5.3"
 	compileInclude group: "org.drools", name: "knowledge-internal-api", version: "5.4.0.Final"
 	compileInclude group: "org.eclipse.jdt.core.compiler", name: "ecj", version: "4.5.1"
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 83e8e3dd29790 (LPD-46473 Auto SF)
 	compileOnly group: "com.google.protobuf", name: "protobuf-java", version: "3.25.5"
+=======
+
+	compileOnly group: "com.google.protobuf", name: "protobuf-java", version: "3.21.7"
+>>>>>>> parent of 0bee490563fe9 (LPD-37739 auto SF)
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "jakarta.annotation", name: "jakarta.annotation-api", version: "2.1.1"
 	compileOnly group: "jakarta.xml.bind", name: "jakarta.xml.bind-api", version: "4.0.2"

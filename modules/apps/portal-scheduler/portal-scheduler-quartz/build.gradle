@@ -1,5 +1,10 @@
 dependencies {
+<<<<<<< HEAD
 	compileInclude group: "com.liferay", name: "org.quartz", version: "2.1.7.LIFERAY-PATCHED-2"
+=======
+	compileInclude group: "com.liferay", name: "org.quartz", version: "2.1.7.LIFERAY-PATCHED-1"
+
+>>>>>>> parent of 83e8e3dd29790 (LPD-46473 Auto SF)
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "jakarta.servlet", name: "jakarta.servlet-api", version: "6.0.0"
@@ -12,6 +17,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:petra:petra-string")
+
 	testImplementation project(":core:petra:petra-lang")
 }
 

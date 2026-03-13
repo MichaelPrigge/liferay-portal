@@ -1,6 +1,11 @@
 dependencies {
 	compileInclude group: "com.jhlabs", name: "filters", version: "2.0.235"
+<<<<<<< HEAD
 	compileInclude group: "com.liferay", name: "nl.captcha.simplecaptcha", version: "1.1.1.JAKARTA-LIFERAY-PATCHED-1"
+=======
+	compileInclude group: "com.liferay", name: "nl.captcha.simplecaptcha", version: "1.1.1"
+
+>>>>>>> parent of 83e8e3dd29790 (LPD-46473 Auto SF)
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.jakarta.portlet", name: "com.liferay.jakarta.portlet-api", version: "4.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

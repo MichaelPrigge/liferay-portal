@@ -1,8 +1,18 @@
 dependencies {
 	testCompileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+<<<<<<< HEAD
+<<<<<<< HEAD
 	testIntegrationImplementation group: "com.liferay", name: "jakarta.ws.rs", version: "3.1.0.LIFERAY-PATCHED-1"
+=======
+
+>>>>>>> parent of 83e8e3dd29790 (LPD-46473 Auto SF)
 	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationImplementation group: "org.apache.commons", name: "commons-lang3", version: "3.18.0"
+=======
+	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationImplementation group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
+	testIntegrationImplementation group: "org.apache.commons", name: "commons-lang3", version: "3.11"
+>>>>>>> parent of 909360bc1cc8f (LPD-53448 Auto SF)
 	testIntegrationImplementation group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 	testIntegrationImplementation project(":apps:account:account-api")
 	testIntegrationImplementation project(":apps:application-list:application-list-api")

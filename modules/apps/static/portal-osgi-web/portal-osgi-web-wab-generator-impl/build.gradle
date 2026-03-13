@@ -19,4 +19,15 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:petra:petra-string")
+<<<<<<< HEAD
+=======
+
+	testImplementation group: "commons-io", name: "commons-io", version: "2.15.1"
+	testImplementation group: "jaxen", name: "jaxen", version: "1.1.1"
+	testImplementation group: "org.slf4j", name: "slf4j-api", version: "1.7.26"
+	testImplementation project(":core:petra:petra-concurrent")
+	testImplementation project(":core:petra:petra-lang")
+	testImplementation project(":core:petra:petra-memory")
+	testImplementation project(":core:petra:petra-process")
+>>>>>>> parent of 83e8e3dd29790 (LPD-46473 Auto SF)
 }

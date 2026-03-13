@@ -10,6 +10,7 @@ dependencies {
 	compileInclude group: "org.codehaus.woodstox", name: "stax2-api", version: "3.1.4"
 	compileInclude group: "org.cryptacular", name: "cryptacular", version: "1.2.4"
 	compileInclude group: "xml-resolver", name: "xml-resolver", version: "1.2"
+
 	compileOnly group: "com.fasterxml.woodstox", name: "woodstox-core", version: "6.4.0"
 	compileOnly group: "com.google.guava", name: "guava", version: "32.0.1-jre"
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
@@ -57,6 +58,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":dxp:apps:saml:saml-api")
 	compileOnly project(":dxp:apps:saml:saml-persistence-api")
+
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testImplementation project(":apps:portal-cache:portal-cache-api")
 	testImplementation project(":apps:portal-cache:portal-cache-test-util")

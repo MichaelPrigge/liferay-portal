@@ -45,7 +45,11 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
+<<<<<<< HEAD
 	testImplementation group: "org.jsoup", name: "jsoup", version: "1.15.3"
+=======
+
+>>>>>>> parent of 83e8e3dd29790 (LPD-46473 Auto SF)
 	testImplementation project(":apps:portal-search:portal-search")
 	testImplementation project(":core:petra:petra-concurrent")
 	testImplementation project(":core:petra:petra-memory")

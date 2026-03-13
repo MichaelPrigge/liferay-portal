@@ -1,11 +1,22 @@
 dependencies {
 	testCompileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testCompileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+<<<<<<< HEAD
 	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.18.2"
 	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.18.2"
 	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.18.2"
+<<<<<<< HEAD
 	testIntegrationImplementation group: "com.liferay", name: "jakarta.ws.rs", version: "3.1.0.LIFERAY-PATCHED-1"
+=======
+
+	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.16.1"
+	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.16.1"
+	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.16.1"
+>>>>>>> parent of 83e8e3dd29790 (LPD-46473 Auto SF)
+=======
+>>>>>>> parent of 909360bc1cc8f (LPD-53448 Auto SF)
 	testIntegrationImplementation group: "commons-lang", name: "commons-lang", version: "2.6"
+	testIntegrationImplementation group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	testIntegrationImplementation group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	testIntegrationImplementation group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 	testIntegrationImplementation project(":apps:batch-engine:batch-engine-api")
