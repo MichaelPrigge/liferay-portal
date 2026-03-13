@@ -1,9 +1,5 @@
 dependencies {
 	api project(":modules:testray-rest-api")
-<<<<<<< HEAD
-
-=======
->>>>>>> parent of 16b8cd7b99e7d (LPD-47747 Auto SF)
 	compileInclude group: "com.google.api", name: "api-common", version: "1.10.1"
 	compileInclude group: "com.google.api", name: "gax", version: "1.62.0"
 	compileInclude group: "com.google.api", name: "gax-httpjson", version: "0.79.0"
