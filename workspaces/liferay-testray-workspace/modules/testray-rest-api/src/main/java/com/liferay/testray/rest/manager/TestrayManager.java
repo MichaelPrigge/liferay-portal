@@ -21,7 +21,8 @@ import org.w3c.dom.Document;
 public interface TestrayManager {
 
 	public int autofillTestrayBuilds(
-			long companyId, long testrayBuild1, long testrayBuild2, long userId)
+			long companyId, long testrayBuild1, long testrayBuild2,
+			TestrayCache cache, long userId)
 		throws Exception;
 
 	public int createTestraySubtasks(
@@ -53,7 +54,8 @@ public interface TestrayManager {
 		throws Exception;
 
 	public ObjectEntry updateTestrayBuildSummary(
-			long companyId, long testrayBuildId, long userId)
+			long companyId, long testrayBuildId, TestrayCache testrayCache,
+			long userId)
 		throws Exception;
 
 }
