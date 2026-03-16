@@ -75,34 +75,19 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 			});
 
 			if(data?.items?.length > 0) {
+				const keys = ['caseResultBlocked', 'caseResultFailed',
+					'caseResultIncomplete', 'caseResultPassed',
+					'caseResultTestFix', 'caseResultUntested'
+];
+
 				const buildSummaryTotal = data.items.reduce((acc, item) => {
-					return {
-						caseResultPassed: acc.caseResultPassed + (Number(item.caseResultPassed) || 0),
-						caseResultFailed: acc.caseResultFailed + (Number(item.caseResultFailed) || 0),
-						caseResultIncomplete: acc.caseResultIncomplete + (Number(item.caseResultIncomplete) || 0),
-						caseResultBlocked: acc.caseResultBlocked + (Number(item.caseResultBlocked) || 0),
-						caseResultInProgress: acc.caseResultInProgress + (Number(item.caseResultInProgress) || 0),
-						caseResultUntested: acc.caseResultUntested + (Number(item.caseResultUntested) || 0),
-						caseResultDidNotRun: acc.caseResultDidNotRun + (Number(item.caseResultDidNotRun) || 0),
-						caseResultTestFix: acc.caseResultTestFix + (Number(item.caseResultTestFix) || 0),
-					};
-					}, {
-					caseResultPassed: 0,
-					caseResultFailed: 0,
-					caseResultIncomplete: 0,
-					caseResultBlocked: 0,
-					caseResultInProgress: 0,
-					caseResultUntested: 0,
-					caseResultDidNotRun: 0,
-					caseResultTestFix: 0,
-				});
-	
-				testrayBuildSummary.caseResultBlocked = buildSummaryTotal.caseResultBlocked;
-				testrayBuildSummary.caseResultFailed = buildSummaryTotal.caseResultFailed;
-				testrayBuildSummary.caseResultIncomplete = buildSummaryTotal.caseResultIncomplete;
-				testrayBuildSummary.caseResultPassed = buildSummaryTotal.caseResultPassed;
-				testrayBuildSummary.caseResultTestFix = buildSummaryTotal.caseResultTestFix;
-				testrayBuildSummary.caseResultUntested = buildSummaryTotal.caseResultUntested;
+					keys.forEach(key => {
+						acc[key] = (acc[key] || 0) + (Number(item[key]) || 0);
+					});
+					return acc;
+				}, {});
+
+				Object.assign(testrayBuildSummary, buildSummaryTotal);
 			}
 		}
 	}
