@@ -10,6 +10,7 @@ import {
 	APIResponse,
 	FacetAggregation,
 	TestrayBuild,
+	TestrayBuildSummary,
 	TestrayCaseDetail,
 	TestrayJiraIssue,
 } from '../../services/rest';
@@ -38,38 +39,38 @@ function getStatusesMap(
 const getAggregationValue = (value: number | string) =>
 	value ? Number(value) : 0;
 
-const useTotalTestCasesByTestrayBuild = (testrayBuild: TestrayBuild) => {
+const useTotalTestCasesByTestrayBuild = (testrayBuildSummary: TestrayBuildSummary) => {
 	const donutColumns = useMemo(
 		() => [
 			[
 				CaseResultStatuses.PASSED,
-				getAggregationValue(testrayBuild.caseResultPassed),
+				getAggregationValue(testrayBuildSummary.caseResultPassed),
 			],
 			[
 				CaseResultStatuses.FAILED,
-				getAggregationValue(testrayBuild.caseResultFailed),
+				getAggregationValue(testrayBuildSummary.caseResultFailed),
 			],
 			[
 				CaseResultStatuses.BLOCKED,
-				getAggregationValue(testrayBuild.caseResultBlocked),
+				getAggregationValue(testrayBuildSummary.caseResultBlocked),
 			],
 			[
 				CaseResultStatuses.TEST_FIX,
-				getAggregationValue(testrayBuild.caseResultTestFix),
+				getAggregationValue(testrayBuildSummary.caseResultTestFix),
 			],
 			[
 				CaseResultStatuses.INCOMPLETE,
-				getAggregationValue(testrayBuild.caseResultIncomplete) +
-					getAggregationValue(testrayBuild.caseResultUntested),
+				getAggregationValue(testrayBuildSummary.caseResultIncomplete) +
+					getAggregationValue(testrayBuildSummary.caseResultUntested),
 			],
 		],
 		[
-			testrayBuild.caseResultBlocked,
-			testrayBuild.caseResultFailed,
-			testrayBuild.caseResultIncomplete,
-			testrayBuild.caseResultPassed,
-			testrayBuild.caseResultTestFix,
-			testrayBuild.caseResultUntested,
+			testrayBuildSummary.caseResultBlocked,
+			testrayBuildSummary.caseResultFailed,
+			testrayBuildSummary.caseResultIncomplete,
+			testrayBuildSummary.caseResultPassed,
+			testrayBuildSummary.caseResultTestFix,
+			testrayBuildSummary.caseResultUntested,
 		]
 	);
 
@@ -85,10 +86,10 @@ const useTotalTestCasesByTestrayBuild = (testrayBuild: TestrayBuild) => {
 							previousValue + currentValue
 					),
 			},
-			ready: !!testrayBuild,
+			ready: !!testrayBuildSummary,
 			statuses: Object.values(CaseResultStatuses),
 		}),
-		[donutColumns, testrayBuild]
+		[donutColumns, testrayBuildSummary]
 	);
 };
 

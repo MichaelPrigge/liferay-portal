@@ -12,24 +12,103 @@ import Loading from '~/components/Loading';
 import {useCaseResultsChart} from '~/hooks/useCaseResultsChart';
 import {safeJSONParse} from '~/util';
 
+import {useLocation, useSearchParams} from 'react-router-dom';
+
+import {useFetch} from '../../../../hooks/useFetch';
+
 import JiraLink from '../../../../components/JiraLink';
 import Container from '../../../../components/Layout/Container';
 import QATable from '../../../../components/Table/QATable';
 import {useTotalTestCasesByTestrayBuild} from '../../../../hooks/data/useCaseResultGroupBy';
 import useIssuesFound from '../../../../hooks/data/useIssuesFound';
 import i18n from '../../../../i18n';
-import {TestrayBuild, TestrayTask} from '../../../../services/rest';
+import {TestrayBuild, TestrayBuildSummary, TestrayTask} from '../../../../services/rest';
 import {formatUTCDate} from '../../../../util/date';
 import {getDonutLegend} from '../../../../util/graph';
 import BuildAlertBar from './BuildAlertBar';
 
+import SearchBuilder from '../../../../core/SearchBuilder'; // Ajuste o caminho da importação
+import { get } from 'http';
+
 type BuildOverviewProps = {
 	testrayBuild: TestrayBuild;
 	testrayTask?: TestrayTask;
+	testrayTeamId?: number;
 };
 
 const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
-	const totalTestCasesGroup = useTotalTestCasesByTestrayBuild(testrayBuild);
+	const testrayBuildSummary: TestrayBuildSummary = {
+		caseResultBlocked: testrayBuild.caseResultBlocked,
+		caseResultFailed: testrayBuild.caseResultFailed,
+		caseResultIncomplete: testrayBuild.caseResultIncomplete,
+		caseResultPassed: testrayBuild.caseResultPassed,
+		caseResultTestFix: testrayBuild.caseResultTestFix,
+		caseResultUntested: testrayBuild.caseResultUntested
+	};
+
+	const { search } = useLocation();
+
+	const searchParams = new URLSearchParams(search);
+
+	const filter = searchParams.get('filter');
+
+	if (filter) {
+		const filterJSON = JSON.parse(filter);
+
+		const testrayTeamIds = filterJSON.testrayTeamIds;
+
+		if (Array.isArray(testrayTeamIds) && testrayTeamIds.length > 0) {
+
+			const filter = useMemo(() => {
+				return new SearchBuilder().eq(
+					'r_buildToBuildSummary_c_buildId', testrayBuild.id
+				).and(
+				).in(
+					'r_teamToBuildSummary_c_teamId', testrayTeamIds
+				).build();
+			}, [testrayTeamIds]);
+
+			const {data} = useFetch('/buildsummaries/', {
+				params: {
+					filter
+				}
+			});
+
+			if(data?.items?.length > 0) {
+				const buildSummaryTotal = data.items.reduce((acc, item) => {
+					return {
+						caseResultPassed: acc.caseResultPassed + (Number(item.caseResultPassed) || 0),
+						caseResultFailed: acc.caseResultFailed + (Number(item.caseResultFailed) || 0),
+						caseResultIncomplete: acc.caseResultIncomplete + (Number(item.caseResultIncomplete) || 0),
+						caseResultBlocked: acc.caseResultBlocked + (Number(item.caseResultBlocked) || 0),
+						caseResultInProgress: acc.caseResultInProgress + (Number(item.caseResultInProgress) || 0),
+						caseResultUntested: acc.caseResultUntested + (Number(item.caseResultUntested) || 0),
+						caseResultDidNotRun: acc.caseResultDidNotRun + (Number(item.caseResultDidNotRun) || 0),
+						caseResultTestFix: acc.caseResultTestFix + (Number(item.caseResultTestFix) || 0),
+					};
+					}, {
+					caseResultPassed: 0,
+					caseResultFailed: 0,
+					caseResultIncomplete: 0,
+					caseResultBlocked: 0,
+					caseResultInProgress: 0,
+					caseResultUntested: 0,
+					caseResultDidNotRun: 0,
+					caseResultTestFix: 0,
+				});
+	
+				testrayBuildSummary.caseResultBlocked = buildSummaryTotal.caseResultBlocked;
+				testrayBuildSummary.caseResultFailed = buildSummaryTotal.caseResultFailed;
+				testrayBuildSummary.caseResultIncomplete = buildSummaryTotal.caseResultIncomplete;
+				testrayBuildSummary.caseResultPassed = buildSummaryTotal.caseResultPassed;
+				testrayBuildSummary.caseResultTestFix = buildSummaryTotal.caseResultTestFix;
+				testrayBuildSummary.caseResultUntested = buildSummaryTotal.caseResultUntested;
+			}
+		}
+	}
+
+
+	const totalTestCasesGroup = useTotalTestCasesByTestrayBuild(testrayBuildSummary);
 	const {chart, entity, loading} = useCaseResultsChart({
 		buildId: testrayBuild.id,
 	});

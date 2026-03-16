@@ -176,6 +176,15 @@ export type TestrayBuildCustomAPI = {
 	testrayStatusMetric: TestrayStatusMetric;
 };
 
+export type TestrayBuildSummary = {
+	caseResultBlocked: number | string;
+	caseResultFailed: number | string;
+	caseResultIncomplete: number | string;
+	caseResultPassed: number | string;
+	caseResultTestFix: number | string;
+	caseResultUntested: number | string;
+};
+
 export type TestrayStatusMetric = {
 	blocked: number;
 	failed: number;
