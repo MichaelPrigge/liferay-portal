@@ -43,7 +43,7 @@ public class TestrayBuildAutofillResourceImpl
 		testrayBuildAutofill.setCaseAmount(
 			_testrayManager.autofillTestrayBuilds(
 				contextCompany.getCompanyId(), testrayBuildId1, testrayBuildId2,
-				contextUser.getUserId()));
+				null, contextUser.getUserId()));
 
 		JSONObject jsonObject = _getTestrayRunIdsJSONObject(
 			testrayBuildId1, testrayBuildId2);

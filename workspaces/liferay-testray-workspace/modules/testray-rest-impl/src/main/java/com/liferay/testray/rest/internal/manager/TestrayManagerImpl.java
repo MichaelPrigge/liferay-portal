@@ -90,7 +90,7 @@ public class TestrayManagerImpl implements TestrayManager {
 	@Override
 	public int autofillTestrayBuilds(
 			long companyId, long testrayBuildId1, long testrayBuildId2,
-			long userId)
+			TestrayCache testrayCache, long userId)
 		throws Exception {
 
 		int caseAmount = 0;
@@ -145,8 +145,10 @@ public class TestrayManagerImpl implements TestrayManager {
 		}
 
 		if (caseAmount != 0) {
-			updateTestrayBuildSummary(companyId, testrayBuildId1, userId);
-			updateTestrayBuildSummary(companyId, testrayBuildId2, userId);
+			updateTestrayBuildSummary(
+				companyId, testrayBuildId1, testrayCache, userId);
+			updateTestrayBuildSummary(
+				companyId, testrayBuildId2, testrayCache, userId);
 		}
 
 		return caseAmount;
@@ -376,7 +378,8 @@ public class TestrayManagerImpl implements TestrayManager {
 
 			if (!GetterUtil.getBoolean(values.get("autoanalyze"))) {
 				updateTestrayBuildSummary(
-					companyId, testrayCache.getTestrayBuildId(), userId);
+					companyId, testrayCache.getTestrayBuildId(), testrayCache,
+					userId);
 
 				return;
 			}
@@ -399,11 +402,13 @@ public class TestrayManagerImpl implements TestrayManager {
 
 				autofillTestrayBuilds(
 					companyId, testrayCache.getTestrayBuildId(),
-					GetterUtil.getLong(values.get("c_buildId")), userId);
+					GetterUtil.getLong(values.get("c_buildId")), testrayCache,
+					userId);
 			}
 
 			updateTestrayBuildSummary(
-				companyId, testrayCache.getTestrayBuildId(), userId);
+				companyId, testrayCache.getTestrayBuildId(), testrayCache,
+				userId);
 
 			long testrayTaskId = _getObjectEntryId(
 				companyId,
@@ -527,8 +532,15 @@ public class TestrayManagerImpl implements TestrayManager {
 
 	@Override
 	public ObjectEntry updateTestrayBuildSummary(
-			long companyId, long testrayBuildId, long userId)
+			long companyId, long testrayBuildId, TestrayCache testrayCache,
+			long userId)
 		throws Exception {
+
+		if (testrayCache == null) {
+			testrayCache = new TestrayCache();
+
+			loadTestrayCache(companyId, testrayCache, userId);
+		}
 
 		Map<String, Serializable> map = _getTestrayBuildSummary(
 			companyId, testrayBuildId, 0, userId);
@@ -541,31 +553,33 @@ public class TestrayManagerImpl implements TestrayManager {
 				Map<String, Serializable> map2 = _getTestrayBuildSummary(
 					companyId, testrayBuildId, testrayTeamId, userId);
 
-				_addObjectEntry("TestrayBuildSummary", new ServiceContext(), null, userId, map2);
+				map2.put("r_buildToBuildSummary_c_buildId", testrayBuildId);
+				map2.put("r_teamToBuildSummary_c_teamId", testrayTeamId);
 
+				long testrayBuildSummaryId = _getObjectEntryId(
+					companyId,
+					StringBundler.concat(
+						"r_buildToBuildSummary_c_buildId eq '", testrayBuildId,
+						"' and r_teamToBuildSummary_c_teamId eq '",
+						testrayTeamId, "'"),
+					"", new String[] {"objectEntryId"}, "BuildSummary",
+					testrayCache, userId);
+
+				if (testrayBuildSummaryId == 0) {
+					_addObjectEntry(
+						"BuildSummary", new ServiceContext(), testrayCache,
+						userId, map2);
+				}
+				else {
+					_updateObjectEntry(
+						testrayBuildSummaryId, new ServiceContext(), userId,
+						map2);
+				}
 			}
 		}
 
 		return _patchObjectEntry(map, testrayBuildId, userId);
 	}
-
-    private void _addOrUpdateTestrayBuildSummary(
-            ServiceContext serviceContext,
-            long testrayBuildId, TestrayCache testrayCache,  long testrayTeamId,
-            long userId)
-            throws Exception {
-
-        String objectEntryIdsKey = StringBundler.concat(
-                "BuildId#", testrayBuildId, "#TeamId#", testrayTeamId);
-
-        long testrayCaseResultId = _getObjectEntryId(
-                serviceContext.getCompanyId(),
-                StringBundler.concat(
-                        "r_buildToBuildSummary_c_buildId eq '", testrayBuildId,
-                        "' and r_teamToBuildSummary_c_teamId eq '", testrayTeamId, "'"),
-                objectEntryIdsKey, new String[] {"106430600"}, "BuildSummary",
-                testrayCache, userId);
-    }
 
 	private void _addDefaultFactors(
 			long companyId, ServiceContext serviceContext,
@@ -607,6 +621,23 @@ public class TestrayManagerImpl implements TestrayManager {
 				shortName
 			).getObjectDefinitionId(),
 			values, serviceContext);
+	}
+
+	private void _addOrUpdateTestrayBuildSummary(
+			ServiceContext serviceContext, long testrayBuildId,
+			TestrayCache testrayCache, long testrayTeamId, long userId)
+		throws Exception {
+
+		String objectEntryIdsKey = StringBundler.concat(
+			"BuildId#", testrayBuildId, "#TeamId#", testrayTeamId);
+
+		long testrayCaseResultId = _getObjectEntryId(
+			serviceContext.getCompanyId(),
+			StringBundler.concat(
+				"r_buildToBuildSummary_c_buildId eq '", testrayBuildId,
+				"' and r_teamToBuildSummary_c_teamId eq '", testrayTeamId, "'"),
+			objectEntryIdsKey, new String[] {"106430600"}, "BuildSummary",
+			testrayCache, userId);
 	}
 
 	private void _addOrUpdateTestrayCaseDetail(
@@ -1316,7 +1347,8 @@ public class TestrayManagerImpl implements TestrayManager {
 				StringBundler.concat(
 					"buildId eq '", testrayBuildId, "' ",
 					(testrayTeamId > 0) ?
-						"and r_teamToCaseResult_c_teamId eq '" + testrayTeamId + "'" : ""),
+						"and r_teamToCaseResult_c_teamId eq '" + testrayTeamId +
+							"'" : ""),
 				Pagination.of(1, 8), null, null);
 
 		List<Facet> facets = objectEntriesPage.getFacets();

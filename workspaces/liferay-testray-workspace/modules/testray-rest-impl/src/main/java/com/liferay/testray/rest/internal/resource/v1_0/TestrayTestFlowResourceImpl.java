@@ -286,7 +286,7 @@ public class TestrayTestFlowResourceImpl
 
 		_testrayManager.updateTestrayBuildSummary(
 			contextCompany.getCompanyId(),
-			GetterUtil.getInteger(values.get("r_buildToTasks_c_buildId")),
+			GetterUtil.getInteger(values.get("r_buildToTasks_c_buildId")), null,
 			contextUser.getUserId());
 
 		return testrayTestFlow;

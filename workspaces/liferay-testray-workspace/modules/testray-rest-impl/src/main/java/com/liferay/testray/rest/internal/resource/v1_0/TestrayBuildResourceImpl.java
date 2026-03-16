@@ -33,7 +33,7 @@ public class TestrayBuildResourceImpl extends BaseTestrayBuildResourceImpl {
 		throws Exception {
 
 		ObjectEntry objectEntry = _testrayManager.updateTestrayBuildSummary(
-			contextCompany.getCompanyId(), testrayBuildId,
+			contextCompany.getCompanyId(), testrayBuildId, null,
 			contextUser.getUserId());
 
 		Map<String, Serializable> values = objectEntry.getValues();
