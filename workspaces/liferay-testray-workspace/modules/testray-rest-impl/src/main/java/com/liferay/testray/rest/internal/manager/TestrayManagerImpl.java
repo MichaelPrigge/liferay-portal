@@ -541,7 +541,7 @@ public class TestrayManagerImpl implements TestrayManager {
 				Map<String, Serializable> map2 = _getTestrayBuildSummary(
 					companyId, testrayBuildId, testrayTeamId, userId);
 
-//				_addObjectEntry("", new ServiceContext(), tes);
+				_addObjectEntry("TestrayBuildSummary", new ServiceContext(), null, userId, map2);
 
 			}
 		}
@@ -1314,9 +1314,9 @@ public class TestrayManagerImpl implements TestrayManager {
 					false, null, null, null, null, LocaleUtil.getSiteDefault(),
 					null, _userLocalService.fetchUser(userId)),
 				StringBundler.concat(
-					"buildId eq '", testrayBuildId, "'",
+					"buildId eq '", testrayBuildId, "' ",
 					(testrayTeamId > 0) ?
-						"AND teamId eq '" + testrayTeamId + "'" : ""),
+						"and r_teamToCaseResult_c_teamId eq '" + testrayTeamId + "'" : ""),
 				Pagination.of(1, 8), null, null);
 
 		List<Facet> facets = objectEntriesPage.getFacets();
@@ -1823,7 +1823,7 @@ public class TestrayManagerImpl implements TestrayManager {
 		return TransformUtil.transform(
 			values,
 			value -> GetterUtil.getLong(
-				value.get("r_teamToCaseResult_c_teamId")));
+				value.get("r_teamtocaseresult_c_teamid")));
 	}
 
 	private List<Map<String, Serializable>> _getValuesList(
