@@ -58,7 +58,6 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 		const testrayTeamIds = filterJSON.testrayTeamIds;
 
 		if (Array.isArray(testrayTeamIds) && testrayTeamIds.length > 0) {
-
 			const filter = useMemo(() => {
 				return new SearchBuilder().eq(
 					'r_buildToBuildSummary_c_buildId', testrayBuild.id
@@ -74,11 +73,20 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 				}
 			});
 
+			const keys: (keyof TestrayBuildSummary)[] = [
+				'caseResultBlocked',
+				'caseResultFailed',
+				'caseResultIncomplete',
+				'caseResultPassed',
+				'caseResultTestFix',
+				'caseResultUntested',
+			];
+
+			keys.forEach(key => {
+				testrayBuildSummary[key] = 0;
+			});
+
 			if(data?.items?.length > 0) {
-				const keys = ['caseResultBlocked', 'caseResultFailed',
-					'caseResultIncomplete', 'caseResultPassed',
-					'caseResultTestFix', 'caseResultUntested'
-];
 
 				const buildSummaryTotal = data.items.reduce((acc, item) => {
 					keys.forEach(key => {
