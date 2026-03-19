@@ -88,7 +88,7 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 
 			if(data?.items?.length > 0) {
 
-				const buildSummaryTotal = data.items.reduce((acc, item) => {
+				const buildSummaryTotal = data.items.reduce((acc: { [x: string]: any; }, item: { [x: string]: any; }) => {
 					keys.forEach(key => {
 						acc[key] = (acc[key] || 0) + (Number(item[key]) || 0);
 					});
