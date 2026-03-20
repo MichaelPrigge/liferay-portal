@@ -644,18 +644,18 @@ public class TestrayStatusMetricResourceImpl
 
 		sb = new StringBundler(31);
 
-		sb.append("select (b.caseresultblocked_ + b.caseresultfailed_ + ");
-		sb.append("b.caseresultincomplete_ + b.caseresultinprogress_ + ");
-		sb.append("b.caseresultpassed_ + b.caseresulttestfix_ + ");
-		sb.append("b.caseresultuntested_) as total, b.caseResultBlocked_ as ");
-		sb.append("blocked, b.caseresultfailed_ as failed, ");
-		sb.append("b.caseresultincomplete_ as incomplete, ");
+		sb.append("select  b.archived_, (b.caseresultblocked_ + ");
+		sb.append("b.caseresultfailed_ + b.caseresultincomplete_ + ");
+		sb.append("b.caseresultinprogress_ + b.caseresultpassed_ + ");
+		sb.append("b.caseresulttestfix_ + b.caseresultuntested_) as total, ");
+		sb.append("b.caseResultBlocked_ as blocked, b.caseresultfailed_ as ");
+		sb.append("failed, b.caseresultincomplete_ as incomplete, ");
 		sb.append("b.caseresultinprogress_ as inprogress, ");
 		sb.append("b.caseresultpassed_ as passed, b.caseresulttestfix_ as ");
 		sb.append("testfix, b.caseresultuntested_ as untested, b.c_buildId_, ");
 		sb.append("bx.cpuUseTime_, b.dueDate_, bx.importStatus_, b.gitHash_, ");
-		sb.append("b.name_, b.promoted_, b.archived_, pv.name_ as ");
-		sb.append("productVersionName, (select dueStatus_ from ");
+		sb.append("b.name_, b.promoted_, b.r_routineToBuilds_c_routineId, ");
+		sb.append("pv.name_ as productVersionName, (select dueStatus_ from ");
 		sb.append("O_[%COMPANY_ID%]_Task t where t.r_buildToTasks_c_buildId ");
 		sb.append("= b.c_buildId_) as taskStatus from O_[%COMPANY_ID%]_Build ");
 		sb.append("b, O_[%COMPANY_ID%]_Build_x bx, ");
@@ -731,6 +731,8 @@ public class TestrayStatusMetricResourceImpl
 							String.valueOf(value.get("promoted_")));
 						testrayBuildTaskStatus = GetterUtil.getString(
 							value.get("taskstatus"));
+						testrayRoutineId = GetterUtil.getLong(
+							value.get("r_routinetobuilds_c_routineid"));
 						testrayStatusMetric = _getTestrayStatusMetric(value);
 
 						setTestrayBuildDueDate(
