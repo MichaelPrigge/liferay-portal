@@ -12,9 +12,9 @@ import Loading from '~/components/Loading';
 import {useCaseResultsChart} from '~/hooks/useCaseResultsChart';
 import {safeJSONParse} from '~/util';
 
-import {useLocation, useSearchParams} from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 
-import {useFetch} from '../../../../hooks/useFetch';
+import fetcher from '~/services/fetcher';
 
 import JiraLink from '../../../../components/JiraLink';
 import Container from '../../../../components/Layout/Container';
@@ -27,8 +27,7 @@ import {formatUTCDate} from '../../../../util/date';
 import {getDonutLegend} from '../../../../util/graph';
 import BuildAlertBar from './BuildAlertBar';
 
-import SearchBuilder from '../../../../core/SearchBuilder'; // Ajuste o caminho da importação
-import { get } from 'http';
+import SearchBuilder from '../../../../core/SearchBuilder';
 
 type BuildOverviewProps = {
 	testrayBuild: TestrayBuild;
@@ -37,69 +36,85 @@ type BuildOverviewProps = {
 };
 
 const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
-	const testrayBuildSummary: TestrayBuildSummary = {
-		caseResultBlocked: testrayBuild.caseResultBlocked,
-		caseResultFailed: testrayBuild.caseResultFailed,
-		caseResultIncomplete: testrayBuild.caseResultIncomplete,
-		caseResultPassed: testrayBuild.caseResultPassed,
-		caseResultTestFix: testrayBuild.caseResultTestFix,
-		caseResultUntested: testrayBuild.caseResultUntested
-	};
+	const [testrayBuildSummary, setTestrayBuildSummary] = useState<TestrayBuildSummary>({
+        caseResultBlocked: testrayBuild.caseResultBlocked,
+        caseResultFailed: testrayBuild.caseResultFailed,
+        caseResultIncomplete: testrayBuild.caseResultIncomplete,
+        caseResultPassed: testrayBuild.caseResultPassed,
+        caseResultTestFix: testrayBuild.caseResultTestFix,
+        caseResultUntested: testrayBuild.caseResultUntested,
+    });
 
-	const { search } = useLocation();
+    const { search } = useLocation();
 
-	const searchParams = new URLSearchParams(search);
+	useEffect(() => {
+    const searchParams = new URLSearchParams(search);
+    const filter = searchParams.get('filter');
 
-	const filter = searchParams.get('filter');
+    if (!filter) {
+        setTestrayBuildSummary({
+            caseResultBlocked: testrayBuild.caseResultBlocked || 0,
+            caseResultFailed: testrayBuild.caseResultFailed || 0,
+            caseResultIncomplete: testrayBuild.caseResultIncomplete || 0,
+            caseResultPassed: testrayBuild.caseResultPassed || 0,
+            caseResultTestFix: testrayBuild.caseResultTestFix || 0,
+            caseResultUntested: testrayBuild.caseResultUntested || 0,
+        });
+        return;
+    }
 
-	if (filter) {
-		const filterJSON = JSON.parse(filter);
+    const filterJSON = safeJSONParse(filter);
+    const testrayTeamIds = filterJSON?.testrayTeamIds;
 
-		const testrayTeamIds = filterJSON.testrayTeamIds;
+    if (!Array.isArray(testrayTeamIds) || testrayTeamIds.length === 0) {
+        return;
+    }
 
-		if (Array.isArray(testrayTeamIds) && testrayTeamIds.length > 0) {
-			const filter = useMemo(() => {
-				return new SearchBuilder().eq(
-					'r_buildToBuildSummary_c_buildId', testrayBuild.id
-				).and(
-				).in(
-					'r_teamToBuildSummary_c_teamId', testrayTeamIds
-				).build();
-			}, [testrayTeamIds]);
+    const resetSummary = {
+        caseResultBlocked: 0,
+        caseResultFailed: 0,
+        caseResultIncomplete: 0,
+        caseResultPassed: 0,
+        caseResultTestFix: 0,
+        caseResultUntested: 0,
+    };
+    setTestrayBuildSummary(resetSummary);
 
-			const {data} = useFetch('/buildsummaries/', {
-				params: {
-					filter
-				}
-			});
+    const fetchSummary = async () => {
+        const searchBuilder = new SearchBuilder();
+        const teamFilter = searchBuilder
+            .eq('r_buildToBuildSummary_c_buildId', testrayBuild.id)
+            .and()
+            .in('r_teamToBuildSummary_c_teamId', testrayTeamIds)
+            .build();
 
-			const keys: (keyof TestrayBuildSummary)[] = [
-				'caseResultBlocked',
-				'caseResultFailed',
-				'caseResultIncomplete',
-				'caseResultPassed',
-				'caseResultTestFix',
-				'caseResultUntested',
-			];
+        try {
+            const response = await fetcher(`/buildsummaries?filter=${teamFilter}`);
+            const items = response?.items || [];
 
-			keys.forEach(key => {
-				testrayBuildSummary[key] = 0;
-			});
+            if (items.length === 0) {
+                return;
+            }
 
-			if(data?.items?.length > 0) {
+            const keys: (keyof TestrayBuildSummary)[] = [
+                'caseResultBlocked', 'caseResultFailed', 'caseResultIncomplete',
+                'caseResultPassed', 'caseResultTestFix', 'caseResultUntested'
+            ];
+            const buildSummaryTotal = items.reduce((acc: TestrayBuildSummary, item: any) => {
+                keys.forEach((key) => {
+                    acc[key] = (acc[key] || 0) + (Number(item[key]) || 0);
+                });
+                return acc;
+            }, { ...resetSummary });
 
-				const buildSummaryTotal = data.items.reduce((acc: { [x: string]: any; }, item: { [x: string]: any; }) => {
-					keys.forEach(key => {
-						acc[key] = (acc[key] || 0) + (Number(item[key]) || 0);
-					});
-					return acc;
-				}, {});
+            setTestrayBuildSummary(buildSummaryTotal);
+        } catch (error) {
+			console.error(error);
+        }
+    };
 
-				Object.assign(testrayBuildSummary, buildSummaryTotal);
-			}
-		}
-	}
-
+    fetchSummary();
+}, [search, testrayBuild.id]);
 
 	const totalTestCasesGroup = useTotalTestCasesByTestrayBuild(testrayBuildSummary);
 	const {chart, entity, loading} = useCaseResultsChart({
@@ -125,6 +140,13 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 			setColumnChartLoad(true);
 		}, 100);
 	}, [entity]);
+
+	const [donutChartLoad, setDonutChartLoad] = useState(false);
+
+	useEffect(() => {
+		setDonutChartLoad(false);
+		setTimeout(() => setDonutChartLoad(true), 100);
+	}, [testrayBuildSummary]);
 
 	return (
 		<>
@@ -261,7 +283,7 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 							'col-4': entity,
 						})}
 					>
-						{totalTestCasesGroup.ready && (
+						{totalTestCasesGroup.ready && donutChartLoad && (
 							<div className="col-8">
 								<ClayChart
 									data={{
@@ -283,6 +305,12 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 									}}
 									legend={{show: false}}
 									onafterinit={() => {
+										const testrayTotalMetricsGraphLegend = document.getElementById('testrayTotalMetricsGraphLegend');
+
+										if (testrayTotalMetricsGraphLegend) {
+											testrayTotalMetricsGraphLegend.innerHTML = '';
+										}
+
 										getDonutLegend(ref.current, {
 											data: totalTestCasesGroup.donut.columns.map(
 												([name]) => name
