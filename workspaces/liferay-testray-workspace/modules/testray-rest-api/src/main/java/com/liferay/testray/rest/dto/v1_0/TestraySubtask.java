@@ -11,6 +11,8 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -41,7 +43,7 @@ public class TestraySubtask implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(TestraySubtask.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Long getCaseResultAmount() {
 		if (_caseResultAmountSupplier != null) {
 			caseResultAmount = _caseResultAmountSupplier.get();
@@ -82,7 +84,7 @@ public class TestraySubtask implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _caseResultAmountSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getError() {
 		if (_errorSupplier != null) {
 			error = _errorSupplier.get();
@@ -123,7 +125,7 @@ public class TestraySubtask implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _errorSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -162,7 +164,7 @@ public class TestraySubtask implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getIssues() {
 		if (_issuesSupplier != null) {
 			issues = _issuesSupplier.get();
@@ -203,7 +205,7 @@ public class TestraySubtask implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _issuesSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -242,7 +244,7 @@ public class TestraySubtask implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Long getScore() {
 		if (_scoreSupplier != null) {
 			score = _scoreSupplier.get();
@@ -281,7 +283,7 @@ public class TestraySubtask implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _scoreSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getStatus() {
 		if (_statusSupplier != null) {
 			status = _statusSupplier.get();
@@ -322,7 +324,7 @@ public class TestraySubtask implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _statusSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Long getTestrayTaskId() {
 		if (_testrayTaskIdSupplier != null) {
 			testrayTaskId = _testrayTaskIdSupplier.get();
@@ -363,7 +365,7 @@ public class TestraySubtask implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _testrayTaskIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Long getUserId() {
 		if (_userIdSupplier != null) {
 			userId = _userIdSupplier.get();
@@ -404,7 +406,7 @@ public class TestraySubtask implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _userIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getUserName() {
 		if (_userNameSupplier != null) {
 			userName = _userNameSupplier.get();
@@ -445,7 +447,7 @@ public class TestraySubtask implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _userNameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getUserPortraitUrl() {
 		if (_userPortraitUrlSupplier != null) {
 			userPortraitUrl = _userPortraitUrlSupplier.get();
@@ -674,8 +676,8 @@ public class TestraySubtask implements Serializable {
 		return sb.toString();
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema(
-		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
+	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.testray.rest.dto.v1_0.TestraySubtask",
 		name = "x-class-name"
 	)

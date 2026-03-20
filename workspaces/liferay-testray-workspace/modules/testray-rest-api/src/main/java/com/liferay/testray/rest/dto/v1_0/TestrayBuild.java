@@ -11,6 +11,8 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -41,7 +43,7 @@ public class TestrayBuild implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(TestrayBuild.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Boolean getArchived() {
 		if (_archivedSupplier != null) {
 			archived = _archivedSupplier.get();
@@ -82,7 +84,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _archivedSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Integer getCaseResultBlocked() {
 		if (_caseResultBlockedSupplier != null) {
 			caseResultBlocked = _caseResultBlockedSupplier.get();
@@ -123,7 +125,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _caseResultBlockedSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Integer getCaseResultDidNotRun() {
 		if (_caseResultDidNotRunSupplier != null) {
 			caseResultDidNotRun = _caseResultDidNotRunSupplier.get();
@@ -164,7 +166,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _caseResultDidNotRunSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Integer getCaseResultFailed() {
 		if (_caseResultFailedSupplier != null) {
 			caseResultFailed = _caseResultFailedSupplier.get();
@@ -205,7 +207,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _caseResultFailedSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Integer getCaseResultInProgress() {
 		if (_caseResultInProgressSupplier != null) {
 			caseResultInProgress = _caseResultInProgressSupplier.get();
@@ -246,7 +248,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _caseResultInProgressSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Integer getCaseResultIncomplete() {
 		if (_caseResultIncompleteSupplier != null) {
 			caseResultIncomplete = _caseResultIncompleteSupplier.get();
@@ -287,7 +289,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _caseResultIncompleteSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Integer getCaseResultPassed() {
 		if (_caseResultPassedSupplier != null) {
 			caseResultPassed = _caseResultPassedSupplier.get();
@@ -328,7 +330,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _caseResultPassedSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Integer getCaseResultTestFix() {
 		if (_caseResultTestFixSupplier != null) {
 			caseResultTestFix = _caseResultTestFixSupplier.get();
@@ -369,7 +371,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _caseResultTestFixSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Integer getCaseResultUntested() {
 		if (_caseResultUntestedSupplier != null) {
 			caseResultUntested = _caseResultUntestedSupplier.get();
@@ -410,7 +412,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _caseResultUntestedSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getCpuUseTime() {
 		if (_cpuUseTimeSupplier != null) {
 			cpuUseTime = _cpuUseTimeSupplier.get();
@@ -451,7 +453,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _cpuUseTimeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getDateArchived() {
 		if (_dateArchivedSupplier != null) {
 			dateArchived = _dateArchivedSupplier.get();
@@ -492,7 +494,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _dateArchivedSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -533,7 +535,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getDueDate() {
 		if (_dueDateSupplier != null) {
 			dueDate = _dueDateSupplier.get();
@@ -574,7 +576,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _dueDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getDueStatus() {
 		if (_dueStatusSupplier != null) {
 			dueStatus = _dueStatusSupplier.get();
@@ -615,7 +617,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _dueStatusSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getGitHash() {
 		if (_gitHashSupplier != null) {
 			gitHash = _gitHashSupplier.get();
@@ -656,7 +658,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _gitHashSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getGithubCompareURLs() {
 		if (_githubCompareURLsSupplier != null) {
 			githubCompareURLs = _githubCompareURLsSupplier.get();
@@ -697,7 +699,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _githubCompareURLsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -736,7 +738,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Boolean getPromoted() {
 		if (_promotedSupplier != null) {
 			promoted = _promotedSupplier.get();
@@ -777,7 +779,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _promotedSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Long getR_productVersionToBuilds_c_productVersionId() {
 		if (_r_productVersionToBuilds_c_productVersionIdSupplier != null) {
 			r_productVersionToBuilds_c_productVersionId =
@@ -824,7 +826,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _r_productVersionToBuilds_c_productVersionIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Long getR_projectToBuilds_c_projectId() {
 		if (_r_projectToBuilds_c_projectIdSupplier != null) {
 			r_projectToBuilds_c_projectId =
@@ -869,7 +871,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _r_projectToBuilds_c_projectIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Long getR_routineToBuilds_c_routineId() {
 		if (_r_routineToBuilds_c_routineIdSupplier != null) {
 			r_routineToBuilds_c_routineId =
@@ -914,7 +916,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _r_routineToBuilds_c_routineIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Boolean getTemplate() {
 		if (_templateSupplier != null) {
 			template = _templateSupplier.get();
@@ -955,7 +957,7 @@ public class TestrayBuild implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _templateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Long getTemplateTestrayBuildId() {
 		if (_templateTestrayBuildIdSupplier != null) {
 			templateTestrayBuildId = _templateTestrayBuildIdSupplier.get();
@@ -1337,8 +1339,8 @@ public class TestrayBuild implements Serializable {
 		return sb.toString();
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema(
-		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
+	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.testray.rest.dto.v1_0.TestrayBuild",
 		name = "x-class-name"
 	)

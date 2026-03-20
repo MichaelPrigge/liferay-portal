@@ -6,6 +6,8 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -65,6 +67,42 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseTestrayTestFlowResourceImpl
 	implements EntityModelResource, TestrayTestFlowResource,
 			   VulcanBatchEngineTaskItemDelegate<TestrayTestFlow> {
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/testray-rest/v1.0/testray-testflow/by-testray-subtaskId/{testraySubtaskId}' -d $'{"caseResultAmount": ___, "comment": ___, "dueStatus": ___, "issues": ___, "mbMessageId": ___, "mbThreadId": ___, "subtaskAmount": ___, "userId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "testraySubtaskId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "TestrayTestFlow")
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path(
+		"/testray-testflow/by-testray-subtaskId/{testraySubtaskId}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public TestrayTestFlow putTestrayTestFlowByTestraySubtaskIdTestraySubtask(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("testraySubtaskId")
+			Long testraySubtaskId,
+			TestrayTestFlow testrayTestFlow)
+		throws Exception {
+
+		return new TestrayTestFlow();
+	}
 
 	/**
 	 * Invoke this method with the command line:
@@ -165,6 +203,28 @@ public abstract class BaseTestrayTestFlowResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/testray-rest/v1.0/testray-testflow/testray-subtask/merge'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "TestrayTestFlow")
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/testray-testflow/testray-subtask/merge")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public Page<TestraySubtask> putTestrayTestFlowTestraySubtaskMergePage(
+			TestraySubtask[] testraySubtasks)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/testray-rest/v1.0/testray-testflow/{testrayTaskId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -246,64 +306,6 @@ public abstract class BaseTestrayTestFlowResourceImpl
 			vulcanBatchEngineImportTaskResource.postImportTask(
 				TestrayTestFlow.class.getName(), callbackURL, null, object)
 		).build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/testray-rest/v1.0/testray-testflow/by-testray-subtaskId/{testraySubtaskId}' -d $'{"caseResultAmount": ___, "comment": ___, "dueStatus": ___, "issues": ___, "mbMessageId": ___, "mbThreadId": ___, "subtaskAmount": ___, "userId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "testraySubtaskId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "TestrayTestFlow")
-		}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path(
-		"/testray-testflow/by-testray-subtaskId/{testraySubtaskId}"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@javax.ws.rs.PUT
-	@Override
-	public TestrayTestFlow putTestrayTestFlowByTestraySubtaskIdTestraySubtask(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("testraySubtaskId")
-			Long testraySubtaskId,
-			TestrayTestFlow testrayTestFlow)
-		throws Exception {
-
-		return new TestrayTestFlow();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/testray-rest/v1.0/testray-testflow/testray-subtask/merge'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "TestrayTestFlow")
-		}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/testray-testflow/testray-subtask/merge")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@javax.ws.rs.PUT
-	@Override
-	public Page<TestraySubtask> putTestrayTestFlowTestraySubtaskMergePage(
-			TestraySubtask[] testraySubtasks)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
 	}
 
 	@Override
@@ -389,9 +391,7 @@ public abstract class BaseTestrayTestFlowResourceImpl
 
 	@Override
 	public Page<TestrayTestFlow> read(
-			com.liferay.portal.kernel.search.filter.Filter filter,
-			Pagination pagination,
-			com.liferay.portal.kernel.search.Sort[] sorts,
+			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
@@ -497,8 +497,7 @@ public abstract class BaseTestrayTestFlowResourceImpl
 	}
 
 	public void setExpressionConvert(
-		ExpressionConvert<com.liferay.portal.kernel.search.filter.Filter>
-			expressionConvert) {
+		ExpressionConvert<Filter> expressionConvert) {
 
 		this.expressionConvert = expressionConvert;
 	}
@@ -550,7 +549,7 @@ public abstract class BaseTestrayTestFlowResourceImpl
 	}
 
 	@Override
-	public com.liferay.portal.kernel.search.filter.Filter toFilter(
+	public Filter toFilter(
 		String filterString, Map<String, List<String>> multivaluedMap) {
 
 		try {
@@ -575,7 +574,7 @@ public abstract class BaseTestrayTestFlowResourceImpl
 	}
 
 	@Override
-	public com.liferay.portal.kernel.search.Sort[] toSorts(String sortString) {
+	public Sort[] toSorts(String sortString) {
 		if (Validator.isNull(sortString)) {
 			return null;
 		}
@@ -593,13 +592,13 @@ public abstract class BaseTestrayTestFlowResourceImpl
 					sortParser.parse(sortString));
 
 			List<SortField> sortFields = oDataSort.getSortFields();
-			com.liferay.portal.kernel.search.Sort[] sorts =
-				new com.liferay.portal.kernel.search.Sort[sortFields.size()];
+
+			Sort[] sorts = new Sort[sortFields.size()];
 
 			for (int i = 0; i < sortFields.size(); i++) {
 				SortField sortField = sortFields.get(i);
 
-				sorts[i] = new com.liferay.portal.kernel.search.Sort(
+				sorts[i] = new Sort(
 					sortField.getSortableFieldName(
 						contextAcceptLanguage.getPreferredLocale()),
 					!sortField.isAscending());
@@ -610,7 +609,7 @@ public abstract class BaseTestrayTestFlowResourceImpl
 		catch (Exception exception) {
 			_log.error("Invalid sort " + sortString, exception);
 
-			return new com.liferay.portal.kernel.search.Sort[0];
+			return new Sort[0];
 		}
 	}
 
@@ -737,8 +736,7 @@ public abstract class BaseTestrayTestFlowResourceImpl
 	protected Object contextScopeChecker;
 	protected UriInfo contextUriInfo;
 	protected com.liferay.portal.kernel.model.User contextUser;
-	protected ExpressionConvert<com.liferay.portal.kernel.search.filter.Filter>
-		expressionConvert;
+	protected ExpressionConvert<Filter> expressionConvert;
 	protected FilterParserProvider filterParserProvider;
 	protected GroupLocalService groupLocalService;
 	protected ResourceActionLocalService resourceActionLocalService;

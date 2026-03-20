@@ -4,6 +4,7 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -42,6 +43,42 @@ import javax.ws.rs.core.UriInfo;
 @javax.ws.rs.Path("/v1.0")
 public abstract class BaseTestrayRunComparisonResourceImpl
 	implements TestrayRunComparisonResource {
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/testray-rest/v1.0/testray-run-comparisons/by-testray-routineId/{testrayRoutineId}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "testrayRoutineId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "TestrayRunComparison"
+			)
+		}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path(
+		"/testray-run-comparisons/by-testray-routineId/{testrayRoutineId}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Object getTestrayRunComparisonByTestrayRoutineIdTestrayRoutine(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("testrayRoutineId")
+			Long testrayRoutineId)
+		throws Exception {
+
+		return null;
+	}
 
 	/**
 	 * Invoke this method with the command line:
@@ -86,47 +123,10 @@ public abstract class BaseTestrayRunComparisonResourceImpl
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("testrayRunId2")
 			Long testrayRunId2,
-			@javax.ws.rs.core.Context
-				com.liferay.portal.kernel.search.filter.Filter filter)
+			@javax.ws.rs.core.Context Filter filter)
 		throws Exception {
 
 		return new TestrayRunComparison();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/testray-rest/v1.0/testray-run-comparisons/by-testray-routineId/{testrayRoutineId}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "testrayRoutineId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "TestrayRunComparison"
-			)
-		}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path(
-		"/testray-run-comparisons/by-testray-routineId/{testrayRoutineId}"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Object getTestrayRunComparisonByTestrayRoutineIdTestrayRoutine(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("testrayRoutineId")
-			Long testrayRoutineId)
-		throws Exception {
-
-		return null;
 	}
 
 	/**
@@ -214,8 +214,7 @@ public abstract class BaseTestrayRunComparisonResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("testrayCaseResultStatus2")
 			String testrayCaseResultStatus2,
-			@javax.ws.rs.core.Context
-				com.liferay.portal.kernel.search.filter.Filter filter)
+			@javax.ws.rs.core.Context Filter filter)
 		throws Exception {
 
 		return new TestrayRunComparison();
@@ -315,8 +314,7 @@ public abstract class BaseTestrayRunComparisonResourceImpl
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.ws.rs.QueryParam("testrayCaseResultStatus2")
 				String testrayCaseResultStatus2,
-				@javax.ws.rs.core.Context
-					com.liferay.portal.kernel.search.filter.Filter filter,
+				@javax.ws.rs.core.Context Filter filter,
 				@javax.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 
@@ -363,8 +361,7 @@ public abstract class BaseTestrayRunComparisonResourceImpl
 	}
 
 	public void setExpressionConvert(
-		ExpressionConvert<com.liferay.portal.kernel.search.filter.Filter>
-			expressionConvert) {
+		ExpressionConvert<Filter> expressionConvert) {
 
 		this.expressionConvert = expressionConvert;
 	}
@@ -514,8 +511,7 @@ public abstract class BaseTestrayRunComparisonResourceImpl
 	protected Object contextScopeChecker;
 	protected UriInfo contextUriInfo;
 	protected com.liferay.portal.kernel.model.User contextUser;
-	protected ExpressionConvert<com.liferay.portal.kernel.search.filter.Filter>
-		expressionConvert;
+	protected ExpressionConvert<Filter> expressionConvert;
 	protected FilterParserProvider filterParserProvider;
 	protected GroupLocalService groupLocalService;
 	protected ResourceActionLocalService resourceActionLocalService;

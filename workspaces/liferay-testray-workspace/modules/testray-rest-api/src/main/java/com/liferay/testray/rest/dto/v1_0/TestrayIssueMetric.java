@@ -11,6 +11,8 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -43,7 +45,7 @@ public class TestrayIssueMetric implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(TestrayIssueMetric.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getTestrayIssueKey() {
 		if (_testrayIssueKeySupplier != null) {
 			testrayIssueKey = _testrayIssueKeySupplier.get();
@@ -84,7 +86,7 @@ public class TestrayIssueMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _testrayIssueKeySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getTestrayIssueTitle() {
 		if (_testrayIssueTitleSupplier != null) {
 			testrayIssueTitle = _testrayIssueTitleSupplier.get();
@@ -125,7 +127,7 @@ public class TestrayIssueMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _testrayIssueTitleSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getTestrayIssueType() {
 		if (_testrayIssueTypeSupplier != null) {
 			testrayIssueType = _testrayIssueTypeSupplier.get();
@@ -166,7 +168,7 @@ public class TestrayIssueMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _testrayIssueTypeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	@Valid
 	public TestrayStatusMetric getTestrayStatusMetric() {
 		if (_testrayStatusMetricSupplier != null) {
@@ -303,8 +305,8 @@ public class TestrayIssueMetric implements Serializable {
 		return sb.toString();
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema(
-		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
+	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.testray.rest.dto.v1_0.TestrayIssueMetric",
 		name = "x-class-name"
 	)

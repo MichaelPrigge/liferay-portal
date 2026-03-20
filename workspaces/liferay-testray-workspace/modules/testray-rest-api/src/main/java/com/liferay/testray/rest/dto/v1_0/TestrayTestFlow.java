@@ -11,6 +11,8 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -41,7 +43,7 @@ public class TestrayTestFlow implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(TestrayTestFlow.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Integer getCaseResultAmount() {
 		if (_caseResultAmountSupplier != null) {
 			caseResultAmount = _caseResultAmountSupplier.get();
@@ -82,7 +84,7 @@ public class TestrayTestFlow implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _caseResultAmountSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getComment() {
 		if (_commentSupplier != null) {
 			comment = _commentSupplier.get();
@@ -123,7 +125,7 @@ public class TestrayTestFlow implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _commentSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getDueStatus() {
 		if (_dueStatusSupplier != null) {
 			dueStatus = _dueStatusSupplier.get();
@@ -164,7 +166,7 @@ public class TestrayTestFlow implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _dueStatusSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getIssues() {
 		if (_issuesSupplier != null) {
 			issues = _issuesSupplier.get();
@@ -205,7 +207,7 @@ public class TestrayTestFlow implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _issuesSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Long getMbMessageId() {
 		if (_mbMessageIdSupplier != null) {
 			mbMessageId = _mbMessageIdSupplier.get();
@@ -246,7 +248,7 @@ public class TestrayTestFlow implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _mbMessageIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Long getMbThreadId() {
 		if (_mbThreadIdSupplier != null) {
 			mbThreadId = _mbThreadIdSupplier.get();
@@ -287,7 +289,7 @@ public class TestrayTestFlow implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _mbThreadIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Integer getSubtaskAmount() {
 		if (_subtaskAmountSupplier != null) {
 			subtaskAmount = _subtaskAmountSupplier.get();
@@ -328,7 +330,7 @@ public class TestrayTestFlow implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _subtaskAmountSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Long getUserId() {
 		if (_userIdSupplier != null) {
 			userId = _userIdSupplier.get();
@@ -509,8 +511,8 @@ public class TestrayTestFlow implements Serializable {
 		return sb.toString();
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema(
-		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
+	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.testray.rest.dto.v1_0.TestrayTestFlow",
 		name = "x-class-name"
 	)

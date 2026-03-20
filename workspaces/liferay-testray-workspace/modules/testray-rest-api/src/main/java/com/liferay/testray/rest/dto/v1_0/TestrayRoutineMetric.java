@@ -11,6 +11,8 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -44,7 +46,7 @@ public class TestrayRoutineMetric implements Serializable {
 			TestrayRoutineMetric.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getTestrayBuildCPUUseTime() {
 		if (_testrayBuildCPUUseTimeSupplier != null) {
 			testrayBuildCPUUseTime = _testrayBuildCPUUseTimeSupplier.get();
@@ -86,7 +88,7 @@ public class TestrayRoutineMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _testrayBuildCPUUseTimeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getTestrayBuildDueDate() {
 		if (_testrayBuildDueDateSupplier != null) {
 			testrayBuildDueDate = _testrayBuildDueDateSupplier.get();
@@ -127,7 +129,7 @@ public class TestrayRoutineMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _testrayBuildDueDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Long getTestrayRoutineId() {
 		if (_testrayRoutineIdSupplier != null) {
 			testrayRoutineId = _testrayRoutineIdSupplier.get();
@@ -168,7 +170,7 @@ public class TestrayRoutineMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _testrayRoutineIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getTestrayRoutineName() {
 		if (_testrayRoutineNameSupplier != null) {
 			testrayRoutineName = _testrayRoutineNameSupplier.get();
@@ -209,7 +211,7 @@ public class TestrayRoutineMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _testrayRoutineNameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	@Valid
 	public TestrayStatusMetric getTestrayStatusMetric() {
 		if (_testrayStatusMetricSupplier != null) {
@@ -359,8 +361,8 @@ public class TestrayRoutineMetric implements Serializable {
 		return sb.toString();
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema(
-		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
+	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.testray.rest.dto.v1_0.TestrayRoutineMetric",
 		name = "x-class-name"
 	)

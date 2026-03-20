@@ -11,6 +11,8 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -41,7 +43,7 @@ public class TestrayCaseResult implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(TestrayCaseResult.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getComment() {
 		if (_commentSupplier != null) {
 			comment = _commentSupplier.get();
@@ -82,7 +84,7 @@ public class TestrayCaseResult implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _commentSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Long getDuration() {
 		if (_durationSupplier != null) {
 			duration = _durationSupplier.get();
@@ -123,7 +125,7 @@ public class TestrayCaseResult implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _durationSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getError() {
 		if (_errorSupplier != null) {
 			error = _errorSupplier.get();
@@ -164,7 +166,7 @@ public class TestrayCaseResult implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _errorSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getExecutionDate() {
 		if (_executionDateSupplier != null) {
 			executionDate = _executionDateSupplier.get();
@@ -205,7 +207,7 @@ public class TestrayCaseResult implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _executionDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Boolean getFlaky() {
 		if (_flakySupplier != null) {
 			flaky = _flakySupplier.get();
@@ -246,7 +248,7 @@ public class TestrayCaseResult implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _flakySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getGitHash() {
 		if (_gitHashSupplier != null) {
 			gitHash = _gitHashSupplier.get();
@@ -287,7 +289,7 @@ public class TestrayCaseResult implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _gitHashSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getIssues() {
 		if (_issuesSupplier != null) {
 			issues = _issuesSupplier.get();
@@ -328,7 +330,7 @@ public class TestrayCaseResult implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _issuesSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Long getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -369,7 +371,7 @@ public class TestrayCaseResult implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _prioritySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getStatus() {
 		if (_statusSupplier != null) {
 			status = _statusSupplier.get();
@@ -410,7 +412,7 @@ public class TestrayCaseResult implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _statusSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Long getTestrayBuildId() {
 		if (_testrayBuildIdSupplier != null) {
 			testrayBuildId = _testrayBuildIdSupplier.get();
@@ -451,7 +453,7 @@ public class TestrayCaseResult implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _testrayBuildIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getTestrayCaseName() {
 		if (_testrayCaseNameSupplier != null) {
 			testrayCaseName = _testrayCaseNameSupplier.get();
@@ -492,7 +494,7 @@ public class TestrayCaseResult implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _testrayCaseNameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Long getTestrayCaseResultId() {
 		if (_testrayCaseResultIdSupplier != null) {
 			testrayCaseResultId = _testrayCaseResultIdSupplier.get();
@@ -533,7 +535,7 @@ public class TestrayCaseResult implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _testrayCaseResultIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getTestrayCaseTypeName() {
 		if (_testrayCaseTypeNameSupplier != null) {
 			testrayCaseTypeName = _testrayCaseTypeNameSupplier.get();
@@ -574,7 +576,7 @@ public class TestrayCaseResult implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _testrayCaseTypeNameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getTestrayComponentName() {
 		if (_testrayComponentNameSupplier != null) {
 			testrayComponentName = _testrayComponentNameSupplier.get();
@@ -615,7 +617,7 @@ public class TestrayCaseResult implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _testrayComponentNameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getTestrayProductVersionName() {
 		if (_testrayProductVersionNameSupplier != null) {
 			testrayProductVersionName =
@@ -658,7 +660,7 @@ public class TestrayCaseResult implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _testrayProductVersionNameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Long getTestrayRoutineId() {
 		if (_testrayRoutineIdSupplier != null) {
 			testrayRoutineId = _testrayRoutineIdSupplier.get();
@@ -699,7 +701,7 @@ public class TestrayCaseResult implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _testrayRoutineIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getTestrayRoutineName() {
 		if (_testrayRoutineNameSupplier != null) {
 			testrayRoutineName = _testrayRoutineNameSupplier.get();
@@ -740,7 +742,7 @@ public class TestrayCaseResult implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _testrayRoutineNameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getTestrayRunName() {
 		if (_testrayRunNameSupplier != null) {
 			testrayRunName = _testrayRunNameSupplier.get();
@@ -781,7 +783,7 @@ public class TestrayCaseResult implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _testrayRunNameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Long getTestrayRunNumber() {
 		if (_testrayRunNumberSupplier != null) {
 			testrayRunNumber = _testrayRunNumberSupplier.get();
@@ -822,7 +824,7 @@ public class TestrayCaseResult implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _testrayRunNumberSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getTestrayTeamName() {
 		if (_testrayTeamNameSupplier != null) {
 			testrayTeamName = _testrayTeamNameSupplier.get();
@@ -863,7 +865,7 @@ public class TestrayCaseResult implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _testrayTeamNameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getUserName() {
 		if (_userNameSupplier != null) {
 			userName = _userNameSupplier.get();
@@ -904,7 +906,7 @@ public class TestrayCaseResult implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _userNameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public String getUserPortraitUrl() {
 		if (_userPortraitUrlSupplier != null) {
 			userPortraitUrl = _userPortraitUrlSupplier.get();
@@ -945,7 +947,7 @@ public class TestrayCaseResult implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _userPortraitUrlSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@Schema
 	public Integer getWarning() {
 		if (_warningSupplier != null) {
 			warning = _warningSupplier.get();
@@ -1354,8 +1356,8 @@ public class TestrayCaseResult implements Serializable {
 		return sb.toString();
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema(
-		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
+	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.testray.rest.dto.v1_0.TestrayCaseResult",
 		name = "x-class-name"
 	)
