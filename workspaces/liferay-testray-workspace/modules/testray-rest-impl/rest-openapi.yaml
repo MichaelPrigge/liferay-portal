@@ -94,6 +94,9 @@ components:
                     type: boolean
                 testrayBuildTaskStatus:
                     type: string
+                testrayRoutineId:
+                    format: int64
+                    type: integer
                 testrayStatusMetric:
                     $ref: "#/components/schemas/TestrayStatusMetric"
             type: object
