@@ -241,8 +241,13 @@ const Routine = () => {
 							value: i18n.translate('metrics'),
 						},
 					],
-					navigateTo: ({testrayBuildId}) =>
-						`build/${testrayBuildId}${filter}`,
+					navigateTo: ({testrayBuildId, testrayRoutineId}) => {
+						if(routineId == testrayRoutineId) {
+							return `build/${testrayBuildId}`
+						}
+						
+						return `build/${testrayBuildId}${filter}`
+					}
 				}}
 			>
 				{({items, totalCount}) =>
