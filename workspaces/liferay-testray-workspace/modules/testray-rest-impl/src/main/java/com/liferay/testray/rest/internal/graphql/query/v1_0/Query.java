@@ -496,7 +496,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {testrayStatusMetricByTestrayRoutineIdTestrayRoutineTestrayBuildsMetrics(page: ___, pageSize: ___, testrayBuildId: ___, testrayBuildName: ___, testrayProductVersion: ___, testrayRoutineId: ___, testrayTaskStatus: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {testrayStatusMetricByTestrayRoutineIdTestrayRoutineTestrayBuildsMetrics(page: ___, pageSize: ___, testrayBuildId: ___, testrayBuildName: ___, testrayProductVersion: ___, testrayRoutineId: ___, testrayTaskStatus: ___, testrayTeamId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public TestrayStatusMetricPage
@@ -507,6 +507,7 @@ public class Query {
 				@GraphQLName("testrayProductVersion") String
 					testrayProductVersion,
 				@GraphQLName("testrayTaskStatus") String testrayTaskStatus,
+				@GraphQLName("testrayTeamId") Long testrayTeamId,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 		throws Exception {
@@ -518,7 +519,7 @@ public class Query {
 				testrayStatusMetricResource.
 					getTestrayStatusMetricByTestrayRoutineIdTestrayRoutineTestrayBuildsMetricsPage(
 						testrayRoutineId, testrayBuildId, testrayBuildName,
-						testrayProductVersion, testrayTaskStatus,
+						testrayProductVersion, testrayTaskStatus, testrayTeamId,
 						Pagination.of(page, pageSize))));
 	}
 
