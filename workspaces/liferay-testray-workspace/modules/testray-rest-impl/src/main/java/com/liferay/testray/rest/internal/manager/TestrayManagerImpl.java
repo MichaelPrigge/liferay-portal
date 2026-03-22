@@ -542,43 +542,22 @@ public class TestrayManagerImpl implements TestrayManager {
 			loadTestrayCache(companyId, testrayCache, userId);
 		}
 
-		Map<String, Serializable> map = _getTestrayBuildSummary(
-			companyId, testrayBuildId, 0, userId);
-
 		List<Long> testrayTeamIds = _getTestrayTeamIds(
 			companyId, testrayBuildId);
 
 		if (ListUtil.isNotEmpty(testrayTeamIds)) {
 			for (Long testrayTeamId : testrayTeamIds) {
-				Map<String, Serializable> map2 = _getTestrayBuildSummary(
-					companyId, testrayBuildId, testrayTeamId, userId);
-
-				map2.put("r_buildToBuildSummary_c_buildId", testrayBuildId);
-				map2.put("r_teamToBuildSummary_c_teamId", testrayTeamId);
-
-				long testrayBuildSummaryId = _getObjectEntryId(
-					companyId,
-					StringBundler.concat(
-						"r_buildToBuildSummary_c_buildId eq '", testrayBuildId,
-						"' and r_teamToBuildSummary_c_teamId eq '",
-						testrayTeamId, "'"),
-					"", new String[] {"objectEntryId"}, "BuildSummary",
-					testrayCache, userId);
-
-				if (testrayBuildSummaryId == 0) {
-					_addObjectEntry(
-						"BuildSummary", new ServiceContext(), testrayCache,
-						userId, map2);
-				}
-				else {
-					_updateObjectEntry(
-						testrayBuildSummaryId, new ServiceContext(), userId,
-						map2);
-				}
+				_addOrUpdateTestrayBuildSummary(
+					companyId, testrayBuildId, testrayCache, testrayTeamId,
+					userId,
+					_getTestrayBuildSummary(
+						companyId, testrayBuildId, testrayTeamId, userId));
 			}
 		}
 
-		return _patchObjectEntry(map, testrayBuildId, userId);
+		return _addOrUpdateTestrayBuildSummary(
+			companyId, testrayBuildId, testrayCache, 0, userId,
+			_getTestrayBuildSummary(companyId, testrayBuildId, 0, userId));
 	}
 
 	private void _addDefaultFactors(
@@ -623,21 +602,30 @@ public class TestrayManagerImpl implements TestrayManager {
 			values, serviceContext);
 	}
 
-	private void _addOrUpdateTestrayBuildSummary(
-			ServiceContext serviceContext, long testrayBuildId,
-			TestrayCache testrayCache, long testrayTeamId, long userId)
+	private ObjectEntry _addOrUpdateTestrayBuildSummary(
+			long companyId, long testrayBuildId, TestrayCache testrayCache,
+			long testrayTeamId, long userId, Map<String, Serializable> values)
 		throws Exception {
 
-		String objectEntryIdsKey = StringBundler.concat(
-			"BuildId#", testrayBuildId, "#TeamId#", testrayTeamId);
+		values.put("r_buildToBuildSummary_c_buildId", testrayBuildId);
+		values.put("r_teamToBuildSummary_c_teamId", testrayTeamId);
 
-		long testrayCaseResultId = _getObjectEntryId(
-			serviceContext.getCompanyId(),
+		long testrayBuildSummaryId = _getObjectEntryId(
+			companyId,
 			StringBundler.concat(
 				"r_buildToBuildSummary_c_buildId eq '", testrayBuildId,
 				"' and r_teamToBuildSummary_c_teamId eq '", testrayTeamId, "'"),
-			objectEntryIdsKey, new String[] {"106430600"}, "BuildSummary",
-			testrayCache, userId);
+			"", new String[] {"objectEntryId"}, "BuildSummary", testrayCache,
+			userId);
+
+		if (testrayBuildSummaryId == 0) {
+			return _addObjectEntry(
+				"BuildSummary", new ServiceContext(), testrayCache, userId,
+				values);
+		}
+
+		return _updateObjectEntry(
+			testrayBuildSummaryId, new ServiceContext(), userId, values);
 	}
 
 	private void _addOrUpdateTestrayCaseDetail(
@@ -1327,6 +1315,18 @@ public class TestrayManagerImpl implements TestrayManager {
 			long userId)
 		throws Exception {
 
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("buildId eq '");
+		sb.append(testrayBuildId);
+		sb.append("' ");
+
+		if (testrayTeamId > 0) {
+			sb.append("and r_teamToCaseResult_c_teamId eq '");
+			sb.append(testrayTeamId);
+			sb.append("'");
+		}
+
 		Page<com.liferay.object.rest.dto.v1_0.ObjectEntry> objectEntriesPage =
 			_objectEntryManager.getObjectEntries(
 				companyId,
@@ -1344,12 +1344,7 @@ public class TestrayManagerImpl implements TestrayManager {
 				new DefaultDTOConverterContext(
 					false, null, null, null, null, LocaleUtil.getSiteDefault(),
 					null, _userLocalService.fetchUser(userId)),
-				StringBundler.concat(
-					"buildId eq '", testrayBuildId, "' ",
-					(testrayTeamId > 0) ?
-						"and r_teamToCaseResult_c_teamId eq '" + testrayTeamId +
-							"'" : ""),
-				Pagination.of(1, 8), null, null);
+				sb.toString(), Pagination.of(1, 8), null, null);
 
 		List<Facet> facets = objectEntriesPage.getFacets();
 
@@ -1369,10 +1364,14 @@ public class TestrayManagerImpl implements TestrayManager {
 			).put(
 				"caseResultTestFix", 0
 			).put(
+				"caseResultTotal", 0
+			).put(
 				"caseResultUntested", 0
 			).put(
 				"importStatus", "DONE"
 			).build();
+
+		int caseResultTotal = 0;
 
 		for (Facet.FacetValue facetValue : facetValues) {
 			String key = facetValue.getTerm();
@@ -1389,7 +1388,11 @@ public class TestrayManagerImpl implements TestrayManager {
 			}
 
 			map.put("caseResult" + key, facetValue.getNumberOfOccurrences());
+
+			caseResultTotal += facetValue.getNumberOfOccurrences();
 		}
+
+		map.put("caseResultTotal", caseResultTotal);
 
 		return map;
 	}
