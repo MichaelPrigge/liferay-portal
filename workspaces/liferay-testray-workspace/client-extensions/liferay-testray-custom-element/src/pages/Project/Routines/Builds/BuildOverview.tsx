@@ -101,11 +101,15 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
                 'caseResultPassed', 'caseResultTestFix', 'caseResultUntested'
             ];
             const buildSummaryTotal = items.reduce((acc: TestrayBuildSummary, item: any) => {
-                keys.forEach((key) => {
-                    (acc[key] as any) = (acc[key] || 0) + (Number(item[key]) || 0);
-                });
-                return acc;
-            }, { ...resetSummary });
+    			keys.forEach((key) => {
+        			const currentValue = Number(acc[key]) || 0;
+        			const newValue = Number(item[key]) || 0;
+
+        			acc[key] = currentValue + newValue;
+    			});
+
+    			return acc;
+			}, { ...resetSummary });
 
             setTestrayBuildSummary(buildSummaryTotal);
         } catch (error) {
