@@ -29,8 +29,12 @@ const Routine = () => {
 	const {routineId} = useParams();
 	const {testrayRoutine}: OutletContext = useOutletContext();
 
-	const filter = testrayRoutine.r_teamToRoutines_c_teamId
-		? `?filter=%7B"testrayTeamIds"%3A%5B${testrayRoutine.r_teamToRoutines_c_teamId}%5D%7D&filterSchema=buildResults`
+	const teamId = testrayRoutine.r_teamToRoutines_c_teamId
+
+	const baseResoruceURL = `/testray-status-metrics/by-testray-routineId/${routineId}/testray-builds-metrics`;
+
+	const filter = teamId
+		? `?filter=%7B"testrayTeamIds"%3A%5B${teamId}%5D%7D&filterSchema=buildResults`
 		: '';
 
 	return (
@@ -50,7 +54,7 @@ const Routine = () => {
 					filterSchema: 'builds',
 					title: i18n.translate('build-history'),
 				}}
-				resource={`/testray-status-metrics/by-testray-routineId/${routineId}/testray-builds-metrics`}
+				resource={teamId ? `${baseResoruceURL}?testrayTeamId=${teamId}` : baseResoruceURL}
 				tableProps={{
 					actions,
 					columns: [

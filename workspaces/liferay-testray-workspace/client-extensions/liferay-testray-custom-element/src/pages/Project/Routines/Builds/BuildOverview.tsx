@@ -102,7 +102,7 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
             ];
             const buildSummaryTotal = items.reduce((acc: TestrayBuildSummary, item: any) => {
                 keys.forEach((key) => {
-                    acc[key] = (acc[key] || 0) + (Number(item[key]) || 0);
+                    (acc[key] as any) = (acc[key] || 0) + (Number(item[key]) || 0);
                 });
                 return acc;
             }, { ...resetSummary });
