@@ -88,7 +88,8 @@ public interface TestrayStatusMetricResource {
 			getTestrayStatusMetricByTestrayRoutineIdTestrayRoutineTestrayBuildsMetricsPage(
 				Long testrayRoutineId, Long testrayBuildId,
 				String testrayBuildName, String testrayProductVersion,
-				String testrayTaskStatus, Pagination pagination)
+				String testrayTaskStatus, Long testrayTeamId,
+				Pagination pagination)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
