@@ -84,6 +84,18 @@ public class TestrayBuildResourceImpl extends BaseTestrayBuildResourceImpl {
 		};
 	}
 
+	@Override
+	public TestrayBuild patchTestrayBuild(
+			String initialDate, String finalDate, Long testrayRoutineId)
+		throws Exception {
+
+		_testrayManager.updateTestrayBuildSummaries(
+			contextCompany.getCompanyId(), initialDate, finalDate,
+			testrayRoutineId, null, contextUser.getUserId());
+
+		return null;
+	}
+
 	@Reference
 	private TestrayManager _testrayManager;
 

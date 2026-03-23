@@ -38,6 +38,10 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface TestrayBuildResource {
 
+	public TestrayBuild patchTestrayBuild(
+			String initialDate, String finalDate, Long testrayRoutineId)
+		throws Exception;
+
 	public TestrayBuild patchTestrayBuild(Long testrayBuildId) throws Exception;
 
 	public default void setContextAcceptLanguage(

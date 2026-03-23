@@ -104,6 +104,11 @@ public class ServletDataImpl implements ServletData {
 							TestrayBuildResourceImpl.class,
 							"patchTestrayBuild"));
 					put(
+						"mutation#patchTestrayBuild",
+						new ObjectValuePair<>(
+							TestrayBuildResourceImpl.class,
+							"patchTestrayBuild"));
+					put(
 						"mutation#createTestrayBuildAutofill",
 						new ObjectValuePair<>(
 							TestrayBuildAutofillResourceImpl.class,

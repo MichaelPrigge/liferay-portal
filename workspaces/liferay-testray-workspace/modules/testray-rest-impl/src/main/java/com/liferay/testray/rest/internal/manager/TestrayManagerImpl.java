@@ -530,6 +530,45 @@ public class TestrayManagerImpl implements TestrayManager {
 		}
 	}
 
+	public void updateTestrayBuildSummaries(
+			long companyId, String initialDate, String finalDate,
+			long testrayRoutineId, TestrayCache testrayCache, long userId)
+		throws Exception {
+
+		List<Object> params = new ArrayList<>();
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("select b.c_buildid_ from o_[%COMPANY_ID%]_build b, ");
+		sb.append("objectentry oe where oe.objectentryid = b.c_buildid_ ");
+
+		if (initialDate != null) {
+			sb.append("and oe.createdate >= ? ");
+			params.add(Timestamp.valueOf(initialDate));
+		}
+
+		if (finalDate != null) {
+			sb.append("and oe.createdate < ? ");
+			params.add(Timestamp.valueOf(finalDate));
+		}
+
+		if (testrayRoutineId > 0) {
+			sb.append("and b.r_routinetobuilds_c_routineid = ? ");
+			params.add(testrayRoutineId);
+		}
+
+		List<Map<String, Object>> values = TestrayUtil.executeQuery(
+			StringUtil.replace(
+				sb.toString(), "[%COMPANY_ID%]", String.valueOf(companyId)),
+			params);
+
+		for (Map<String, Object> value : values) {
+			updateTestrayBuildSummary(
+				companyId, GetterUtil.getLong(value.get("c_buildid_")),
+				testrayCache, userId);
+		}
+	}
+
 	@Override
 	public ObjectEntry updateTestrayBuildSummary(
 			long companyId, long testrayBuildId, TestrayCache testrayCache,

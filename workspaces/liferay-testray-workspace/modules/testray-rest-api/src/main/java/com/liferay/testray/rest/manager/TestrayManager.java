@@ -53,6 +53,11 @@ public interface TestrayManager {
 			long userId)
 		throws Exception;
 
+	public void updateTestrayBuildSummaries(
+			long companyId, String initialDate, String finalDate,
+			long testrayRoutineId, TestrayCache testrayCache, long userId)
+		throws Exception;
+
 	public ObjectEntry updateTestrayBuildSummary(
 			long companyId, long testrayBuildId, TestrayCache testrayCache,
 			long userId)

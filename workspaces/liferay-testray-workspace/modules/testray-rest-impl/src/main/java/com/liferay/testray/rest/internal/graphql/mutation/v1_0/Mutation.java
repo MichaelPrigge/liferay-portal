@@ -75,6 +75,20 @@ public class Mutation {
 
 	@GraphQLField
 	public TestrayBuild patchTestrayBuild(
+			@GraphQLName("initialDate") String initialDate,
+			@GraphQLName("finalDate") String finalDate,
+			@GraphQLName("testrayRoutineId") Long testrayRoutineId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_testrayBuildResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			testrayBuildResource -> testrayBuildResource.patchTestrayBuild(
+				initialDate, finalDate, testrayRoutineId));
+	}
+
+	@GraphQLField
+	public TestrayBuild patchTestrayBuild(
 			@GraphQLName("testrayBuildId") Long testrayBuildId)
 		throws Exception {
 

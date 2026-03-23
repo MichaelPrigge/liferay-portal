@@ -420,9 +420,38 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/TestrayBuildAutofill"
             tags: ["TestrayBuildAutofill"]
-    "/testray-build/{testrayBuildId}":
+    "/testray-build/{initialDate}/{finalDate}/{testrayRoutineId}":
         patch:
             operationId: patchTestrayBuild
+            parameters:
+                - in: path
+                  name: initialDate
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: finalDate
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: testrayRoutineId
+                  required: false
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TestrayBuild"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/TestrayBuild"
+            tags: ["TestrayBuild"]
+    "/testray-build/{testrayBuildId}":
+        patch:
             parameters:
                 - in: path
                   name: testrayBuildId
