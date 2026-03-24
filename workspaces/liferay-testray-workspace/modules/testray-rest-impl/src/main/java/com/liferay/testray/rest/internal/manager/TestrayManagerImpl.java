@@ -526,6 +526,10 @@ public class TestrayManagerImpl implements TestrayManager {
 					testrayCache.getTestrayCaseResultAmount(), dueStatus,
 					System.currentTimeMillis() - startTime, fileName, fileSize,
 					serviceContext, testrayCache, userId);
+
+				updateTestrayBuildSummary(
+					companyId, testrayCache.getTestrayBuildId(), testrayCache,
+					userId);
 			}
 		}
 	}
@@ -593,6 +597,12 @@ public class TestrayManagerImpl implements TestrayManager {
 						companyId, testrayBuildId, testrayTeamId, userId));
 			}
 		}
+
+		_patchObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"importStatus", "DONE"
+			).build(),
+			testrayBuildId, userId);
 
 		return _addOrUpdateTestrayBuildSummary(
 			companyId, testrayBuildId, testrayCache, 0, userId,
@@ -1406,8 +1416,6 @@ public class TestrayManagerImpl implements TestrayManager {
 				"caseResultTotal", 0
 			).put(
 				"caseResultUntested", 0
-			).put(
-				"importStatus", "DONE"
 			).build();
 
 		int caseResultTotal = 0;
