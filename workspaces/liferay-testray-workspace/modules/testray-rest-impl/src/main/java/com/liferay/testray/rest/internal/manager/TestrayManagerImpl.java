@@ -598,15 +598,13 @@ public class TestrayManagerImpl implements TestrayManager {
 			}
 		}
 
-		_patchObjectEntry(
-			HashMapBuilder.<String, Serializable>put(
-				"importStatus", "DONE"
-			).build(),
-			testrayBuildId, userId);
+		Map<String, Serializable> values = _getTestrayBuildSummary(
+			companyId, testrayBuildId, 0, userId);
 
-		return _addOrUpdateTestrayBuildSummary(
-			companyId, testrayBuildId, testrayCache, 0, userId,
-			_getTestrayBuildSummary(companyId, testrayBuildId, 0, userId));
+		_addOrUpdateTestrayBuildSummary(
+			companyId, testrayBuildId, testrayCache, 0, userId, values);
+
+		return _patchObjectEntry(values, testrayBuildId, userId);
 	}
 
 	private void _addDefaultFactors(
@@ -1416,6 +1414,8 @@ public class TestrayManagerImpl implements TestrayManager {
 				"caseResultTotal", 0
 			).put(
 				"caseResultUntested", 0
+			).put(
+				"importStatus", "DONE"
 			).build();
 
 		int caseResultTotal = 0;
