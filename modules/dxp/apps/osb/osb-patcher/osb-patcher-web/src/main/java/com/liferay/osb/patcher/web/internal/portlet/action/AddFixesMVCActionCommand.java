@@ -19,6 +19,7 @@ import com.liferay.osb.patcher.util.PatcherBuildUtil;
 import com.liferay.osb.patcher.util.PatcherFixUtil;
 import com.liferay.osb.patcher.util.PatcherUtil;
 import com.liferay.osb.patcher.web.internal.validator.PatcherFixValidator;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -95,6 +96,11 @@ public class AddFixesMVCActionCommand extends BaseMVCActionCommand {
 		patcherFix.setGitRemoteURL(gitRemoteURL);
 		patcherFix.setLatestFix(true);
 		patcherFix.setObsolete(false);
+
+		User user = themeDisplay.getUser();
+
+		patcherFix.setUserId(user.getUserId());
+		patcherFix.setUserName(user.getFullName());
 
 		int status = WorkflowConstants.STATUS_FIX_ADDING;
 		int type = PatcherFixConstants.TYPE_PATCH;
