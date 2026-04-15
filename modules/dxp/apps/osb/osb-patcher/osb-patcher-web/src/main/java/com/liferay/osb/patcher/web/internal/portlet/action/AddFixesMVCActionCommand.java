@@ -98,11 +98,6 @@ public class AddFixesMVCActionCommand extends BaseMVCActionCommand {
 		patcherFix.setLatestFix(true);
 		patcherFix.setObsolete(false);
 
-		User user = themeDisplay.getUser();
-
-		patcherFix.setUserId(user.getUserId());
-		patcherFix.setUserName(user.getFullName());
-
 		Date date = new Date();
 
 		patcherFix.setCreateDate(date);
@@ -128,6 +123,11 @@ public class AddFixesMVCActionCommand extends BaseMVCActionCommand {
 		patcherFix.setType(type);
 		patcherFix.setStatus(status);
 
+		User user = themeDisplay.getUser();
+
+		patcherFix.setUserId(user.getUserId());
+		patcherFix.setUserName(user.getFullName());
+
 		patcherFix = _patcherFixLocalService.updatePatcherFix(patcherFix);
 
 		List<PatcherBuild> patcherBuilds =
@@ -143,15 +143,14 @@ public class AddFixesMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			patcherBuild = _patcherBuildLocalService.updateStatus(
-				themeDisplay.getUserId(), patcherBuild.getPatcherBuildId(),
+				user.getUserId(), patcherBuild.getPatcherBuildId(),
 				PatcherBuildUtil.getNextPatcherBuildWorkflowStatus(
 					patcherBuild, PatcherBuildUtil.isMergeOnly(patcherBuild)));
 
-			PatcherBuildUtil.workflowParentPatcherBuild(
-				themeDisplay.getUser(), patcherBuild);
+			PatcherBuildUtil.workflowParentPatcherBuild(user, patcherBuild);
 		}
 
-		JenkinsUtil.sendAgentJenkinsRequest(themeDisplay.getUser(), patcherFix);
+		JenkinsUtil.sendAgentJenkinsRequest(user, patcherFix);
 	}
 
 	@Reference
