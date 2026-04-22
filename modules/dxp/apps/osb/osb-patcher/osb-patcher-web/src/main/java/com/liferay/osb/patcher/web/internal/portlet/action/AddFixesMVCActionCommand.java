@@ -5,7 +5,6 @@
 
 package com.liferay.osb.patcher.web.internal.portlet.action;
 
-import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.osb.patcher.constants.PatcherFixConstants;
 import com.liferay.osb.patcher.constants.PatcherPortletKeys;
 import com.liferay.osb.patcher.constants.WorkflowConstants;
@@ -16,7 +15,6 @@ import com.liferay.osb.patcher.service.PatcherBuildLocalService;
 import com.liferay.osb.patcher.service.PatcherFixLocalService;
 import com.liferay.osb.patcher.util.JenkinsUtil;
 import com.liferay.osb.patcher.util.PatcherBuildUtil;
-import com.liferay.osb.patcher.util.PatcherFixUtil;
 import com.liferay.osb.patcher.util.PatcherUtil;
 import com.liferay.osb.patcher.web.internal.validator.PatcherFixValidator;
 import com.liferay.portal.kernel.model.User;
@@ -27,13 +25,12 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
 
-import java.util.Date;
+import java.util.Collections;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -66,8 +63,6 @@ public class AddFixesMVCActionCommand extends BaseMVCActionCommand {
 				themeDisplay.getUserId());
 		}
 
-		long patcherProductVersionId = ParamUtil.getLong(
-			actionRequest, "patcherProductVersionId");
 		long patcherProjectVersionId = ParamUtil.getLong(
 			actionRequest, "patcherProjectVersionId");
 		String patcherFixName = PatcherUtil.preparePatcherName(
@@ -82,51 +77,23 @@ public class AddFixesMVCActionCommand extends BaseMVCActionCommand {
 
 		patcherFixValidator.validateAdd();
 
-		PatcherFix patcherFix = _patcherFixLocalService.createPatcherFix(
-			_counterLocalService.increment());
-
-		patcherFix.setPatcherProductVersionId(patcherProductVersionId);
-		patcherFix.setPatcherProjectVersionId(patcherProjectVersionId);
-		patcherFix.setKey(
-			PatcherFixUtil.generateKey(
-				patcherProjectVersionId, patcherFixName));
-		patcherFix.setName(
-			StringUtil.merge(PatcherUtil.sortTokens(patcherFixName)));
-		patcherFix.setKeyVersion(PatcherFixConstants.KEY_VERSION_DEFAULT);
-		patcherFix.setCommittish(committish);
-		patcherFix.setGitRemoteURL(gitRemoteURL);
-		patcherFix.setLatestFix(true);
-		patcherFix.setObsolete(false);
-
-		Date date = new Date();
-
-		patcherFix.setCreateDate(date);
-		patcherFix.setModifiedDate(date);
-		patcherFix.setStatusDate(date);
-
-		int status = WorkflowConstants.STATUS_FIX_ADDING;
 		int type = PatcherFixConstants.TYPE_PATCH;
 
-		if (patcherFix.getType() == PatcherFixConstants.TYPE_REBASE) {
-			if (Validator.isNull(committish) ||
-				Validator.isNull(gitRemoteURL)) {
-
-				status = WorkflowConstants.STATUS_FIX_REBASING;
-			}
-
-			type = PatcherFixConstants.TYPE_REBASE;
-		}
-		else if (workaround) {
+		if (workaround) {
 			type = PatcherFixConstants.TYPE_WORKAROUND;
 		}
 
-		patcherFix.setType(type);
-		patcherFix.setStatus(status);
-
 		User user = themeDisplay.getUser();
 
-		patcherFix.setUserId(user.getUserId());
-		patcherFix.setUserName(user.getFullName());
+		PatcherFix patcherFix = _patcherFixLocalService.addPatcherFix(
+			user.getUserId(), patcherProjectVersionId,
+			PatcherFixConstants.KEY_VERSION_DEFAULT,
+			StringUtil.merge(PatcherUtil.sortTokens(patcherFixName)),
+			type, WorkflowConstants.STATUS_FIX_ADDING, Collections.emptyList());
+
+		patcherFix.setCommittish(committish);
+		patcherFix.setGitRemoteURL(gitRemoteURL);
+		patcherFix.setObsolete(false);
 
 		patcherFix = _patcherFixLocalService.updatePatcherFix(patcherFix);
 
@@ -152,9 +119,6 @@ public class AddFixesMVCActionCommand extends BaseMVCActionCommand {
 
 		JenkinsUtil.sendAgentJenkinsRequest(user, patcherFix);
 	}
-
-	@Reference
-	private CounterLocalService _counterLocalService;
 
 	@Reference
 	private PatcherBuildLocalService _patcherBuildLocalService;

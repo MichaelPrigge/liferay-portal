@@ -72,6 +72,8 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 		patcherFix.setStatus(status);
 		patcherFix.setStatusDate(new Date());
 
+		// This should be removed. Also, List<Long> parentPatcherFixIds should
+		// be removed from the method signature.
 		PatcherFixRelUtil.addPatcherFixRel(
 			patcherFix.getPatcherFixId(), parentPatcherFixIds);
 
