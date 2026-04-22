@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -104,6 +105,12 @@ public class AddBuildsMVCActionCommand extends BaseMVCActionCommand {
 
 		patcherBuild.setUserId(user.getUserId());
 		patcherBuild.setUserName(user.getFullName());
+
+		Date date = new Date();
+
+		patcherBuild.setCreateDate(date);
+		patcherBuild.setModifiedDate(date);
+		patcherBuild.setStatusDate(date);
 
 		List<String> patcherBuildTokens = PatcherUtil.sortTokens(
 			patcherBuildName);
