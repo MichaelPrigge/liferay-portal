@@ -164,6 +164,7 @@ public class PatcherBuildUtil {
 		patcherBuild.setType(PatcherBuildConstants.TYPE_FIX_PACK);
 		patcherBuild.setQaStatus(WorkflowConstants.STATUS_PENDING);
 		patcherBuild.setStatus(status);
+		patcherBuild.statusDate(new Date());
 
 		workflowParentPatcherBuild(user, patcherBuild);
 
