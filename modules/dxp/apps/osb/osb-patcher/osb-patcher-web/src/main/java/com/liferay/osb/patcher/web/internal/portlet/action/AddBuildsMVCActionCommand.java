@@ -19,6 +19,7 @@ import com.liferay.osb.patcher.util.PatcherProjectVersionUtil;
 import com.liferay.osb.patcher.util.PatcherUtil;
 import com.liferay.osb.patcher.web.internal.validator.PatcherBuildValidator;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -98,6 +99,11 @@ public class AddBuildsMVCActionCommand extends BaseMVCActionCommand {
 		patcherBuild.setKey(
 			PatcherBuildUtil.generateKey(
 				patcherProjectVersionId, patcherBuildName, accountEntryCode));
+
+		User user = themeDisplay.getUser();
+
+		patcherBuild.setUserId(user.getUserId());
+		patcherBuild.setUserName(user.getFullName());
 
 		List<String> patcherBuildTokens = PatcherUtil.sortTokens(
 			patcherBuildName);
