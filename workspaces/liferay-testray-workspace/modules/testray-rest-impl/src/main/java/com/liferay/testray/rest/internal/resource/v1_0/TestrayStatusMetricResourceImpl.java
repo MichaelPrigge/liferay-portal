@@ -612,7 +612,7 @@ public class TestrayStatusMetricResourceImpl
 		sb.append("bs.caseresultuntested_ as untested, bx.cpuUseTime_, ");
 		sb.append("bx.importStatus_, pv.name_ as productVersionName, (select ");
 		sb.append("dueStatus_ from O_[%COMPANY_ID%]_Task t where ");
-		sb.append("t.r_buildToTasks_c_buildId = b.c_buildId_) as taskStatuss ");
+		sb.append("t.r_buildToTasks_c_buildId = b.c_buildId_) as taskStatus ");
 		sb.append("from O_[%COMPANY_ID%]_build b, O_[%COMPANY_ID%]_Build_x ");
 		sb.append("bx, O_[%COMPANY_ID%]_productversion pv, ");
 		sb.append("O_[%COMPANY_ID%]_buildsummary bs where ");
