@@ -184,17 +184,26 @@ const SubtaskCompleteModal: React.FC<SubtaskCompleteModalProps> = ({
 			});
 
 			if (testrayCaseNames?.items) {
-				_issues.map((issue) => {
-					Liferay.OAuth2Client.FromUserAgentApplication(
-						'liferay-testray-etc-spring-boot-oaua'
-					).fetch(`/jira/issues/${issue}`, {
-						body: JSON.stringify({
-							testrayCaseNames: testrayCaseNames.items.map(
-								({name}) => name
-							),
-						}),
-						method: 'PUT',
-					});
+				const testrayCaseNamesList = testrayCaseNames.items.map(
+					({name}) => name
+				);
+
+				_issues.forEach((issue) => {
+					try {
+						Liferay.OAuth2Client.FromUserAgentApplication(
+							'liferay-testray-etc-spring-boot-oaua'
+						)
+							.fetch(`/jira/issues/${issue}`, {
+								body: JSON.stringify({
+									testrayCaseNames: testrayCaseNamesList,
+								}),
+								method: 'PUT',
+							})
+							.catch(console.error);
+					}
+					catch (error) {
+						console.error(error);
+					}
 				});
 			}
 
